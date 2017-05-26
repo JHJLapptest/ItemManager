@@ -192,6 +192,26 @@ namespace BusinessObjects
         {
             _Question = dr["Question"].ToString();
         }
+        public SecurityQuestions GetById(Guid id)
+        {
+            Database database = new Database("ItemManager");
+            DataTable dt = new DataTable();
+            database.Command.CommandType = CommandType.StoredProcedure;
+            database.Command.CommandText = "tblSecurityQuestionsGetById";
+            database.Command.Parameters.Add("@Id", SqlDbType.UniqueIdentifier).Value = id;
+            dt = database.ExecuteQuery();
+            if (dt != null && dt.Rows.Count == 1)
+            {
+                DataRow dr = dt.Rows[0];
+                base.Initialize(dr);
+                InitializeBusinessData(dr);
+                base.IsNew = false;
+                base.IsDirty = false;
+                return this;
+            }
+            else return null;
+        }
+
         #endregion
 
         #region Event Handlers

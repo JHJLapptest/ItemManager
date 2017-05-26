@@ -54,7 +54,6 @@ namespace ItemManager
             cmbQuestion1.ValueMember = "ID";
             cmbQuestion1.DisplayMember = "Question";
             cmbQuestion1.DataSource = Questions1.List;
-            cmbQuestion1.Items.Insert(0, (string)"Select a Sector.");
 
             CQ1 = cmbQuestion1.SelectedValue.ToString();
             CQ1G = Guid.Parse(CQ1);
@@ -101,7 +100,36 @@ namespace ItemManager
 
         private void btnForgotPassword_Click(object sender, EventArgs e)
         {
+            user = new User();
             user = user.ForgotPassword(txtLogin.Text, txtLogin.Text);
+            if (user != null)
+            {
+                this.gbSecurityCheck.Visible = true;
+                this.lblQuestionCheck.Text = user.Questions.List[0].QuestionText;
+
+            }
+        }
+
+        private void btnSend_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (txtAnswerCheck.Text == user.Questions.List[0].Answer)
+                {
+                    user.SendEmailNow();
+                    MessageBox.Show("If the answer is correct, an email has been sent to the email address on record.", "Notice", MessageBoxButtons.OK);
+                    txtAnswerCheck.Clear();
+                }
+                else
+                {
+                    MessageBox.Show("If the answer is correct, an email has been sent to the email address on record.", "Notice", MessageBoxButtons.OK);
+                    txtAnswerCheck.Clear();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
     }
 }

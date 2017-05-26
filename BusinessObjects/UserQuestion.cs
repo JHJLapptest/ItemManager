@@ -15,6 +15,7 @@ namespace BusinessObjects
         private Guid _UserID;
         private Guid _QuestionID;
         private string _Answer;
+        private string _QuestionText;
         #endregion
 
         #region Public Properties
@@ -46,6 +47,15 @@ namespace BusinessObjects
                     _QuestionID = value;
                     base.IsDirty = true;
                 }
+            }
+        }
+        public string QuestionText
+        {
+            get
+            {
+                SecurityQuestions sc = new SecurityQuestions();
+                sc = sc.GetById(_QuestionID);
+                return sc.Question;
             }
         }
         public string Answer
@@ -208,12 +218,12 @@ namespace BusinessObjects
         public void InitializeBusinessData(DataRow dr)
         {
             _UserID = (Guid)dr["UserID"];
-            _QuestionID = (Guid)dr["QuestionTypeID"];
+            _QuestionID = (Guid)dr["QuestionID"];
             _Answer = dr["Answer"].ToString();
         }
         public UserQuestion GetById(Guid id)
         {
-            Database database = new Database("Collections");
+            Database database = new Database("ItemManager");
             DataTable dt = new DataTable();
             database.Command.CommandType = CommandType.StoredProcedure;
             database.Command.CommandText = "tblUserQuestionGetById";

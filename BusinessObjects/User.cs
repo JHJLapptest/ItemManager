@@ -517,29 +517,24 @@ namespace BusinessObjects
                 database.Command.CommandText = "tblUserQuestionGetByUserID";
                 database.Command.Parameters.Add("@UserID", SqlDbType.UniqueIdentifier).Value = base.ID;
                 dt = database.ExecuteQuery();
-                
+
                 if (dt != null && dt.Rows.Count == 3)
                 {
                     DataRow dr2 = dt.Rows[rnd.Next(0, dt.Rows.Count)];
                     //base.Initialize(dr);
                     //InitializeBusinessData(dr);
+                    _Questions = new UserQuestionList();
+                    
+                    UserQuestion uq = new UserQuestion();
+                    uq.Initialize(dr2);
+                    uq.InitializeBusinessData(dr2);
+                    _Questions.List.Add(uq);
+
+                    //question.Question
+                    //need getbyid for SecurityQuestions.
+
+
                 }
-
-                //Questions.List.Clear();
-                //SecurityQuestions question = new SecurityQuestions();
-                //question.Question
-                //need getbyid for SecurityQuestions.
-
-                EmailConfig emailConfig = new EmailConfig();
-                emailConfig = emailConfig.GetByName("gmail");
-                SendEmail se = new SendEmail();
-                se.Email = emailConfig.Email;
-                se.Password = emailConfig.Password;
-                se.Host = emailConfig.Host;
-                se.Port = emailConfig.Port;
-                string body = string.Format("Hello {0}, your Password is:\n {1}", _UserName, _Password);
-                se.Send("JHJLapptest@gmail.com", _Email, "Here's Your Password", body);
-
                 return this;
             }
             else
@@ -547,6 +542,18 @@ namespace BusinessObjects
                 return null;
             }
 
+        }
+        public void SendEmailNow()
+        {
+            EmailConfig emailConfig = new EmailConfig();
+            emailConfig = emailConfig.GetByName("gmail");
+            SendEmail se = new SendEmail();
+            se.Email = emailConfig.Email;
+            se.Password = emailConfig.Password;
+            se.Host = emailConfig.Host;
+            se.Port = emailConfig.Port;
+            string body = string.Format("Hello {0}, your Password is:\n {1}", _UserName, _Password);
+            se.Send("JHJLapptest@gmail.com", _Email, "Here's Your Password", body);
         }
         #endregion
 

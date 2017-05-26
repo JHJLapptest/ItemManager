@@ -44,6 +44,12 @@
             this.cmbQuestion2 = new System.Windows.Forms.ComboBox();
             this.cmbQuestion3 = new System.Windows.Forms.ComboBox();
             this.btnForgotPassword = new System.Windows.Forms.Button();
+            this.gbSecurityCheck = new System.Windows.Forms.GroupBox();
+            this.btnSend = new System.Windows.Forms.Button();
+            this.txtAnswerCheck = new System.Windows.Forms.TextBox();
+            this.lblQuestionCheck = new System.Windows.Forms.Label();
+            this.btnCancel = new System.Windows.Forms.Button();
+            this.gbSecurityCheck.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnSubmit
@@ -184,11 +190,59 @@
             this.btnForgotPassword.UseVisualStyleBackColor = true;
             this.btnForgotPassword.Click += new System.EventHandler(this.btnForgotPassword_Click);
             // 
+            // gbSecurityCheck
+            // 
+            this.gbSecurityCheck.Controls.Add(this.btnCancel);
+            this.gbSecurityCheck.Controls.Add(this.lblQuestionCheck);
+            this.gbSecurityCheck.Controls.Add(this.txtAnswerCheck);
+            this.gbSecurityCheck.Controls.Add(this.btnSend);
+            this.gbSecurityCheck.Location = new System.Drawing.Point(732, 133);
+            this.gbSecurityCheck.Name = "gbSecurityCheck";
+            this.gbSecurityCheck.Size = new System.Drawing.Size(342, 221);
+            this.gbSecurityCheck.TabIndex = 8;
+            this.gbSecurityCheck.TabStop = false;
+            this.gbSecurityCheck.Visible = false;
+            // 
+            // btnSend
+            // 
+            this.btnSend.Location = new System.Drawing.Point(19, 166);
+            this.btnSend.Name = "btnSend";
+            this.btnSend.Size = new System.Drawing.Size(99, 40);
+            this.btnSend.TabIndex = 0;
+            this.btnSend.Text = "Send";
+            this.btnSend.UseVisualStyleBackColor = true;
+            this.btnSend.Click += new System.EventHandler(this.btnSend_Click);
+            // 
+            // txtAnswerCheck
+            // 
+            this.txtAnswerCheck.Location = new System.Drawing.Point(19, 127);
+            this.txtAnswerCheck.Name = "txtAnswerCheck";
+            this.txtAnswerCheck.Size = new System.Drawing.Size(300, 26);
+            this.txtAnswerCheck.TabIndex = 1;
+            // 
+            // lblQuestionCheck
+            // 
+            this.lblQuestionCheck.AutoSize = true;
+            this.lblQuestionCheck.Location = new System.Drawing.Point(15, 60);
+            this.lblQuestionCheck.Name = "lblQuestionCheck";
+            this.lblQuestionCheck.Size = new System.Drawing.Size(0, 20);
+            this.lblQuestionCheck.TabIndex = 2;
+            // 
+            // btnCancel
+            // 
+            this.btnCancel.Location = new System.Drawing.Point(142, 166);
+            this.btnCancel.Name = "btnCancel";
+            this.btnCancel.Size = new System.Drawing.Size(98, 40);
+            this.btnCancel.TabIndex = 3;
+            this.btnCancel.Text = "Cancel";
+            this.btnCancel.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1140, 630);
+            this.Controls.Add(this.gbSecurityCheck);
             this.Controls.Add(this.btnForgotPassword);
             this.Controls.Add(this.cmbQuestion3);
             this.Controls.Add(this.cmbQuestion2);
@@ -208,6 +262,8 @@
             this.Name = "Form1";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
+            this.gbSecurityCheck.ResumeLayout(false);
+            this.gbSecurityCheck.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -231,6 +287,11 @@
         private System.Windows.Forms.ComboBox cmbQuestion2;
         private System.Windows.Forms.ComboBox cmbQuestion3;
         private System.Windows.Forms.Button btnForgotPassword;
+        private System.Windows.Forms.GroupBox gbSecurityCheck;
+        private System.Windows.Forms.Button btnCancel;
+        private System.Windows.Forms.Label lblQuestionCheck;
+        private System.Windows.Forms.TextBox txtAnswerCheck;
+        private System.Windows.Forms.Button btnSend;
     }
 }
 
