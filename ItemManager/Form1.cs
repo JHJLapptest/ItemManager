@@ -23,6 +23,7 @@ namespace ItemManager
         Guid CQ1G = Guid.Empty;
         Guid CQ2G = Guid.Empty;
         Guid CQ3G = Guid.Empty;
+        static Form1 F;
         public Form1()
         {
             InitializeComponent();
@@ -31,6 +32,10 @@ namespace ItemManager
         private void btnSubmit_Click(object sender, EventArgs e)
         {
             user = user.Login(txtLogin.Text, txtPassword.Text);
+            if (user != null)
+            {
+                
+            }
         }
 
         private void btnRegister_Click(object sender, EventArgs e)
@@ -40,11 +45,45 @@ namespace ItemManager
                 user = user.Register(txtEmail.Text, txtUserName.Text, txtFirstName.Text, txtLastName.Text, txtPassword2.Text,
                 CQ1G, CQ2G, CQ3G, txtAns1.Text, txtAns2.Text, txtAns3.Text);
             }
-            MessageBox.Show("Please ensure all security questions are different.", "Error!", MessageBoxButtons.OK);
+            if (CQ1G == CQ2G || CQ1G == CQ3G || CQ2G == CQ3G)
+            {
+                MessageBox.Show("Please ensure all security questions are different.", "Error!", MessageBoxButtons.OK);
+            }
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
+
+            gbLoginForgotPassword.Visible = true;
+            gbRegister.Visible = false;
+            gbSecurityCheck.Visible = false;  
+            //this.Size = new Size(346, 425);
+            
+
+            //F.Width = 346;
+            //F.Height = 425;
+
+        }
+        private void btnForgotPassword_Click(object sender, EventArgs e)
+        {
+            user = new User();
+            user = user.ForgotPassword(txtLogin.Text, txtLogin.Text);
+            if (user != null)
+            {
+                this.gbSecurityCheck.Visible = true;
+                this.lblQuestionCheck.Text = user.Questions.List[0].QuestionText;
+
+            }
+        }
+
+        private void btnNewRegister_Click(object sender, EventArgs e)
+        {
+            gbLoginForgotPassword.Visible = false;
+            gbRegister.Visible = true;
+            gbSecurityCheck.Visible = false;
+            //F.Width = 691;
+            //F.Height = 399;
+
             Questions1 = new SecurityQuestionsList();
             Questions2 = new SecurityQuestionsList();
             Questions3 = new SecurityQuestionsList();
@@ -76,9 +115,32 @@ namespace ItemManager
             CQ3 = cmbQuestion3.SelectedValue.ToString();
             CQ3G = Guid.Parse(CQ3);
             cmbQuestion3.SelectedIndexChanged += CmbQuestion3_SelectedIndexChanged;
-
         }
-        
+
+        private void btnSend_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (txtAnswerCheck.Text.ToUpper() == user.Questions.List[0].Answer.ToUpper())
+                {
+                    user.SendEmailNowForgotPassword();
+                    MessageBox.Show("If the answer is correct, an email has been sent to the email address on record.", "Notice", MessageBoxButtons.OK);
+                    txtAnswerCheck.Clear();
+                    this.gbSecurityCheck.Visible = false;
+                }
+                else
+                {
+                    MessageBox.Show("If the answer is correct, an email has been sent to the email address on record.", "Notice", MessageBoxButtons.OK);
+                    txtAnswerCheck.Clear();
+                    this.gbSecurityCheck.Visible = false;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
         private void CmbQuestion1_SelectedIndexChanged(object sender, EventArgs e)
         {
             cmbQuestion1.DataSource = Questions1.List;
@@ -98,38 +160,9 @@ namespace ItemManager
             CQ3G = Guid.Parse(CQ3);
         }
 
-        private void btnForgotPassword_Click(object sender, EventArgs e)
+        private void logOutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            user = new User();
-            user = user.ForgotPassword(txtLogin.Text, txtLogin.Text);
-            if (user != null)
-            {
-                this.gbSecurityCheck.Visible = true;
-                this.lblQuestionCheck.Text = user.Questions.List[0].QuestionText;
-
-            }
-        }
-
-        private void btnSend_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                if (txtAnswerCheck.Text == user.Questions.List[0].Answer)
-                {
-                    user.SendEmailNow();
-                    MessageBox.Show("If the answer is correct, an email has been sent to the email address on record.", "Notice", MessageBoxButtons.OK);
-                    txtAnswerCheck.Clear();
-                }
-                else
-                {
-                    MessageBox.Show("If the answer is correct, an email has been sent to the email address on record.", "Notice", MessageBoxButtons.OK);
-                    txtAnswerCheck.Clear();
-                }
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
+            Application.Restart();
         }
     }
 }

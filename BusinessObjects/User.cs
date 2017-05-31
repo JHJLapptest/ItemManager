@@ -366,7 +366,7 @@ namespace BusinessObjects
             {
                 base.IsNew = false;
                 base.IsDirty = false;
-
+                
                 return this;
             }
             else return null;
@@ -386,7 +386,8 @@ namespace BusinessObjects
                 return null;
             }*/
         }
-        public User Register(string email, string userName, string firstName, string lastName, string password, Guid questionID1, Guid questionID2, Guid questionID3, 
+        public User Register(string email, string userName, string firstName, string lastName, string password, 
+            Guid questionID1, Guid questionID2, Guid questionID3, 
             string answer1, string answer2, string answer3)
         {
             bool result = false;
@@ -418,7 +419,8 @@ namespace BusinessObjects
                     database.ExecuteNonQueryJWithTransaction();  //fills the empty "buckets" with what we need
                     base.Initialize(database.Command);  //takes info in "buckets" and puts it into HeaderData
 
-                    if (database.Command.Parameters["@ReturnValueEmail"].Value.ToString() == "False" && database.Command.Parameters["@ReturnValueUserName"].Value.ToString() == "False")
+                    if (database.Command.Parameters["@ReturnValueEmail"].Value.ToString() == "False" 
+                        && database.Command.Parameters["@ReturnValueUserName"].Value.ToString() == "False")
                     {
                         throw new Exception("Email and Username already exist.");
                     }
@@ -437,11 +439,11 @@ namespace BusinessObjects
                         UserQuestion Q3 = new UserQuestion();
 
                         Q1.QuestionID = questionID1;
-                        Q1.Answer = answer1;
+                        Q1.Answer = answer1.ToUpper();
                         Q2.QuestionID = questionID2;
-                        Q2.Answer = answer2;
+                        Q2.Answer = answer2.ToUpper();
                         Q3.QuestionID = questionID3;
-                        Q3.Answer = answer3;
+                        Q3.Answer = answer3.ToUpper();
 
                         _Questions = Questions;
 
@@ -453,6 +455,7 @@ namespace BusinessObjects
                         {
                             
                             result = _Questions.Save(database, base.ID);
+                            SendEmailNowRegister();
                         }
                         if (result == true)
                         {
@@ -490,7 +493,8 @@ namespace BusinessObjects
             }
             catch (Exception ex)
             {
-                throw;
+                MessageBox.Show(ex.Message, "Error!", MessageBoxButtons.OK);
+                return this;
             }
         }
         public User ForgotPassword(string email, string username)
@@ -543,7 +547,7 @@ namespace BusinessObjects
             }
 
         }
-        public void SendEmailNow()
+        public void SendEmailNowForgotPassword()
         {
             EmailConfig emailConfig = new EmailConfig();
             emailConfig = emailConfig.GetByName("gmail");
@@ -554,6 +558,18 @@ namespace BusinessObjects
             se.Port = emailConfig.Port;
             string body = string.Format("Hello {0}, your Password is:\n {1}", _UserName, _Password);
             se.Send("JHJLapptest@gmail.com", _Email, "Here's Your Password", body);
+        }
+        public void SendEmailNowRegister()
+        {
+            EmailConfig emailConfig = new EmailConfig();
+            emailConfig = emailConfig.GetByName("gmail");
+            SendEmail se = new SendEmail();
+            se.Email = emailConfig.Email;
+            se.Password = emailConfig.Password;
+            se.Host = emailConfig.Host;
+            se.Port = emailConfig.Port;
+            string body = string.Format("Thank you for using our Item Manager app, {0}. We hope that you make good use of it in your everyday life!", _UserName);
+            se.Send("JHJLapptest@gmail.com", _Email, "Thank You for Registering!", body);
         }
         #endregion
 
