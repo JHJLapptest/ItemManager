@@ -9,13 +9,11 @@ using DatabaseHelper;
 
 namespace BusinessObjects
 {
-    public class UserQuestion : HeaderData
+    class ItemGroup : HeaderData
     {
         #region Private Members
+        private string _Name;
         private Guid _UserID;
-        private Guid _QuestionID;
-        private string _Answer;
-        private string _QuestionText;
         private BrokenRuleList _BrokenRules = new BrokenRuleList();
         #endregion
 
@@ -35,50 +33,20 @@ namespace BusinessObjects
                 }
             }
         }
-        public Guid QuestionID
+        public string Name
         {
             get
             {
-                return _QuestionID;
+                return _Name;
             }
             set
             {
-                if (_QuestionID != value)
+                if (_Name != value)
                 {
-                    _QuestionID = value;
+                    _Name = value;
                     base.IsDirty = true;
+                    bool savable = IsSavable();
                 }
-            }
-        }
-        public string QuestionText
-        {
-            get
-            {
-                SecurityQuestions sc = new SecurityQuestions();
-                sc = sc.GetById(_QuestionID);
-                return sc.Question;
-            }
-        }
-        public string Answer
-        {
-            get
-            {
-                return _Answer;
-            }
-            set
-            {
-                if (Answer != value)
-                {
-                    _Answer = value;
-                    base.IsDirty = true;
-                }
-            }
-        }
-        public BrokenRuleList BrokenRules
-        {
-            get
-            {
-                return _BrokenRules;
             }
         }
         #endregion
@@ -91,17 +59,15 @@ namespace BusinessObjects
             {
                 database.Command.Parameters.Clear();
                 database.Command.CommandType = CommandType.StoredProcedure;
-                database.Command.CommandText = "tblUserQuestionInsert";
-
+                database.Command.CommandText = "tblItemGroupInsert";
                 database.Command.Parameters.Add("@UserID", SqlDbType.UniqueIdentifier).Value = _UserID;
-                database.Command.Parameters.Add("@QuestionID", SqlDbType.UniqueIdentifier).Value = _QuestionID;
-                database.Command.Parameters.Add("@Answer", SqlDbType.VarChar).Value = _Answer;
+                database.Command.Parameters.Add("@Name", SqlDbType.VarChar).Value = _Name;
 
                 base.Initialize(database, Guid.Empty);
                 database.ExecuteNonQueryJWithTransaction();
                 base.Initialize(database.Command);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 result = false;
                 throw;
@@ -115,16 +81,15 @@ namespace BusinessObjects
             {
                 database.Command.Parameters.Clear();
                 database.Command.CommandType = CommandType.StoredProcedure;
-                database.Command.CommandText = "tblUserQuestionUpdate";
-                database.Command.Parameters.Add("@UserID", SqlDbType.VarChar).Value = _UserID;
-                database.Command.Parameters.Add("@QuestionID", SqlDbType.VarChar).Value = _QuestionID;
-                database.Command.Parameters.Add("@Answer", SqlDbType.VarChar).Value = _Answer;
+                database.Command.CommandText = "tblItemGroupUpdate";
+                database.Command.Parameters.Add("@UserID", SqlDbType.UniqueIdentifier).Value = _UserID;
+                database.Command.Parameters.Add("@Name", SqlDbType.VarChar).Value = _Name;
 
                 base.Initialize(database, base.ID);
                 database.ExecuteNonQueryJWithTransaction();
                 base.Initialize(database.Command);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 result = false;
                 throw;
@@ -138,53 +103,55 @@ namespace BusinessObjects
             {
                 database.Command.Parameters.Clear();
                 database.Command.CommandType = CommandType.StoredProcedure;
-                database.Command.CommandText = "tblUserQuestionDelete";
+                database.Command.CommandText = "tblItemGroupDelete";
 
                 base.Initialize(database, base.ID);
                 database.ExecuteNonQueryJWithTransaction();
                 base.Initialize(database.Command);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 result = false;
                 throw;
             }
             return result;
         }
+        
         private bool IsValid()
         {
             bool result = true; //true unless told it's wrong
             _BrokenRules.List.Clear();
 
-            if (QuestionID == Guid.Empty)
+            if (Name == null || _Name.Trim() == string.Empty)
             {
                 result = false;
-                BrokenRule br = new BrokenRule("Security answer must contain three letters or more.");
+                BrokenRule br = new BrokenRule("Please name your collection.");
                 _BrokenRules.List.Add(br);
             }
-            if (Answer == null || _Answer.Trim() == string.Empty || _Answer.Length < 3)
+            if (_UserID == Guid.Empty || UserID == null)
             {
                 result = false;
-                BrokenRule br = new BrokenRule("Security answer must contain three letters or more.");
+                BrokenRule br = new BrokenRule("Error Code: FUCK YOUUUUUUUUUUUUUU!!!!!!!!");
                 _BrokenRules.List.Add(br);
             }
             //Regex regex = new Regex(@"^\w+@[a-zA-Z_]+?\.[a-zA-Z]+?\.[a-zA-Z]{2,3}$");
-            //Match match = regex.Match(_Question);
+            //Match match = regex.Match(_Email);
             //if (!match.Success)
             //{
             //    result = false;
-            //    BrokenRule br = new BrokenRule("Question is in the wrong format.");
+            //    BrokenRule br = new BrokenRule("Email is in the wrong format.");
             //    _BrokenRules.List.Add(br);
             //}
 
             return result;
         }
+
         #endregion
 
         #region Public Methods
-        public UserQuestion Save(Database database, Guid ParentID)
+        public ItemGroup Save(Database database, Guid ParentID)
         {
-            _UserID = ParentID; // How these get linked together. See UserFriendList.cs Comment: CONNECTQuestion
+            _UserID = ParentID; // How these get linked together. See UserFriendList.cs Comment: CONNECTAddress
 
             bool result = true;
             if (base.IsNew == true && IsSavable() == true)
@@ -219,15 +186,15 @@ namespace BusinessObjects
         public void InitializeBusinessData(DataRow dr)
         {
             _UserID = (Guid)dr["UserID"];
-            _QuestionID = (Guid)dr["QuestionID"];
-            _Answer = dr["Answer"].ToString();
+            _Name = dr["Name"].ToString();
+
         }
-        public UserQuestion GetById(Guid id)
+        public ItemGroup GetById(Guid id)
         {
             Database database = new Database("ItemManager");
             DataTable dt = new DataTable();
             database.Command.CommandType = CommandType.StoredProcedure;
-            database.Command.CommandText = "tblUserQuestionGetById";
+            database.Command.CommandText = "tblItemGroupGetById";
             database.Command.Parameters.Add("@Id", SqlDbType.UniqueIdentifier).Value = id;
             dt = database.ExecuteQuery();
             if (dt != null && dt.Rows.Count == 1)
@@ -243,15 +210,11 @@ namespace BusinessObjects
         }
         #endregion
 
-        #region Event Handlers
-        #endregion
-
         #region Construction
-        public UserQuestion()
+        public ItemGroup()
         {
             _UserID = Guid.Empty;
-            _QuestionID = Guid.Empty;
-            _Answer = string.Empty;
+            _Name = string.Empty;
         }
         #endregion
     }

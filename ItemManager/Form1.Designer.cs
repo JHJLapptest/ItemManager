@@ -207,7 +207,7 @@
             this.gbSecurityCheck.Controls.Add(this.lblQuestionCheck);
             this.gbSecurityCheck.Controls.Add(this.txtAnswerCheck);
             this.gbSecurityCheck.Controls.Add(this.btnSend);
-            this.gbSecurityCheck.Location = new System.Drawing.Point(149, 416);
+            this.gbSecurityCheck.Location = new System.Drawing.Point(34, 354);
             this.gbSecurityCheck.Name = "gbSecurityCheck";
             this.gbSecurityCheck.Size = new System.Drawing.Size(342, 152);
             this.gbSecurityCheck.TabIndex = 8;
@@ -279,7 +279,7 @@
             this.gbLoginForgotPassword.Controls.Add(this.btnSubmit);
             this.gbLoginForgotPassword.Controls.Add(this.txtPassword);
             this.gbLoginForgotPassword.Controls.Add(this.btnForgotPassword);
-            this.gbLoginForgotPassword.Location = new System.Drawing.Point(34, 65);
+            this.gbLoginForgotPassword.Location = new System.Drawing.Point(34, 45);
             this.gbLoginForgotPassword.Name = "gbLoginForgotPassword";
             this.gbLoginForgotPassword.Size = new System.Drawing.Size(257, 303);
             this.gbLoginForgotPassword.TabIndex = 17;
@@ -303,7 +303,7 @@
             this.menuToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1263, 33);
+            this.menuStrip1.Size = new System.Drawing.Size(1369, 33);
             this.menuStrip1.TabIndex = 18;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -319,21 +319,21 @@
             // logOutToolStripMenuItem
             // 
             this.logOutToolStripMenuItem.Name = "logOutToolStripMenuItem";
-            this.logOutToolStripMenuItem.Size = new System.Drawing.Size(210, 30);
+            this.logOutToolStripMenuItem.Size = new System.Drawing.Size(161, 30);
             this.logOutToolStripMenuItem.Text = "Log Out";
             this.logOutToolStripMenuItem.Click += new System.EventHandler(this.logOutToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(210, 30);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(161, 30);
             this.exitToolStripMenuItem.Text = "Exit";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1263, 629);
+            this.ClientSize = new System.Drawing.Size(1369, 1047);
             this.Controls.Add(this.gbLoginForgotPassword);
             this.Controls.Add(this.gbRegister);
             this.Controls.Add(this.gbSecurityCheck);

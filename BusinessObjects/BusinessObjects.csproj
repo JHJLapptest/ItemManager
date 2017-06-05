@@ -41,11 +41,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BrokenRule.cs" />
+    <Compile Include="BrokenRuleList.cs" />
     <Compile Include="EmailConfig.cs" />
-    <Compile Include="Events.cs" />
+    <Compile Include="Event.cs" />
     <Compile Include="HeaderData.cs" />
+    <Compile Include="Item.cs" />
+    <Compile Include="ItemGroup.cs" />
+    <Compile Include="ItemGroupList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SecurityQuestionEventArgs.cs" />
+    <Compile Include="SavableEventArgs.cs" />
     <Compile Include="SecurityQuestions.cs" />
     <Compile Include="SecurityQuestionsList.cs" />
     <Compile Include="User.cs" />

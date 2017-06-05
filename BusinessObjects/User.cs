@@ -22,7 +22,7 @@ namespace BusinessObjects
         private string _Password;
         private UserQuestionList _Questions = null;
         Random rnd = new Random();
-        //private BrokenRuleList _BrokenRules = new BrokenRuleList();
+        private BrokenRuleList _BrokenRules = new BrokenRuleList();
         #endregion
 
         #region Public Properties
@@ -114,13 +114,13 @@ namespace BusinessObjects
             }
         }
 
-        //public BrokenRuleList BrokenRules
-        //{
-        //    get
-        //    {
-        //        return _BrokenRules;
-        //    }
-        //}
+        public BrokenRuleList BrokenRules
+        {
+            get
+            {
+                return _BrokenRules;
+            }
+        }
         #endregion
 
         #region Private Methods
@@ -198,40 +198,40 @@ namespace BusinessObjects
         private bool IsValid()
         {
             bool result = true; //true unless told it's wrong
-            //_BrokenRules.List.Clear();
+            _BrokenRules.List.Clear();
 
             if (_Email == null || _Email.Trim() == string.Empty)
             {
                 result = false;
-                //BrokenRule br = new BrokenRule("Email cannot be empty.");
-                //_BrokenRules.List.Add(br);
+                BrokenRule br = new BrokenRule("Email cannot be empty.");
+                _BrokenRules.List.Add(br);
             }
             if (_Password == null || _Password.Trim() == string.Empty)
             {
                 result = false;
-                //BrokenRule br = new BrokenRule("Password cannot be empty.");
-                //_BrokenRules.List.Add(br);
+                BrokenRule br = new BrokenRule("Password cannot be empty.");
+                _BrokenRules.List.Add(br);
             }
             if (_UserName == null || _UserName.Trim() == string.Empty)
             {
                 result = false;
-                //BrokenRule br = new BrokenRule("Username cannot be empty.");
-                //_BrokenRules.List.Add(br);
+                BrokenRule br = new BrokenRule("Username cannot be empty.");
+                _BrokenRules.List.Add(br);
             }
 
             if (_Password == null || _Password.Trim().Contains(" "))
             {
                 result = false;
-                //BrokenRule br = new BrokenRule("Password cannot contain spaces.");
-                //_BrokenRules.List.Add(br);
+                BrokenRule br = new BrokenRule("Password cannot contain spaces.");
+                _BrokenRules.List.Add(br);
             }
             Regex regex = new Regex(@"^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$");
             Match match = regex.Match(_Email);
             if (!match.Success)
             {
                 result = false;
-                //BrokenRule br = new BrokenRule("Email is in the wrong format.");
-                //_BrokenRules.List.Add(br);
+                BrokenRule br = new BrokenRule("Email is in the wrong format.");
+                _BrokenRules.List.Add(br);
             }
             return result;
         }

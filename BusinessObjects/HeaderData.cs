@@ -9,7 +9,7 @@ using System.Data;
 
 namespace BusinessObjects
 {
-    public class HeaderData //l: Events
+    public class HeaderData : Event
     {
         #region Private Members
         private Guid _ID;
