@@ -21,6 +21,7 @@ namespace BusinessObjects
         private string _Email;
         private string _Password;
         private UserQuestionList _Questions = null;
+        private ItemGroupList _ItemGroup = null;
         Random rnd = new Random();
         private BrokenRuleList _BrokenRules = new BrokenRuleList();
         #endregion
@@ -111,6 +112,18 @@ namespace BusinessObjects
                     _Questions = _Questions.GetByUserID(base.ID);
                 }
                 return _Questions;
+            }
+        }
+        public ItemGroupList ItemGroup
+        {
+            get
+            {
+                if (_ItemGroup == null)
+                {
+                    _ItemGroup = new ItemGroupList();
+                    _ItemGroup = _ItemGroup.GetByUserID(base.ID);
+                }
+                return _ItemGroup;
             }
         }
 
@@ -261,7 +274,11 @@ namespace BusinessObjects
                 base.IsNew = false;
                 base.IsDirty = false;
             }
-            if (result == true && _Questions.IsSavable() == true)
+            if (result == true && ItemGroup.IsSavable() == true)
+            {
+                result = _ItemGroup.Save(database, base.ID);
+            }
+            if (result == true && Questions.IsSavable() == true)
             {
                 result = _Questions.Save(database, base.ID);
             }
@@ -279,9 +296,8 @@ namespace BusinessObjects
         {
             bool result = false;
 
-            if ((base.IsDirty == true && IsValid() == true)/* || (_Friends != null && _Friends.IsSavable() == true)
-                || (_Phones != null && _Phones.IsSavable()) || (_Emails != null && _Emails.IsSavable())
-                || (_Addresses != null && _Addresses.IsSavable())*/)
+            if ((base.IsDirty == true && IsValid() == true) || (_ItemGroup != null && _ItemGroup.IsSavable() == true)
+                || (_Questions != null && _Questions.IsSavable()))
             {
                 result = true;
             }

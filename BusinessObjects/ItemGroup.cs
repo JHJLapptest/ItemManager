@@ -9,7 +9,7 @@ using DatabaseHelper;
 
 namespace BusinessObjects
 {
-    class ItemGroup : HeaderData
+    public class ItemGroup : HeaderData
     {
         #region Private Members
         private string _Name;
@@ -49,6 +49,10 @@ namespace BusinessObjects
                 }
             }
         }
+        //public void pubInsert(Database database)
+        //{
+        //    Insert(database);
+        //}
         #endregion
 
         #region Private Methods
@@ -128,12 +132,6 @@ namespace BusinessObjects
                 BrokenRule br = new BrokenRule("Please name your collection.");
                 _BrokenRules.List.Add(br);
             }
-            if (_UserID == Guid.Empty || UserID == null)
-            {
-                result = false;
-                BrokenRule br = new BrokenRule("Error Code: FUCK YOUUUUUUUUUUUUUU!!!!!!!!");
-                _BrokenRules.List.Add(br);
-            }
             //Regex regex = new Regex(@"^\w+@[a-zA-Z_]+?\.[a-zA-Z]+?\.[a-zA-Z]{2,3}$");
             //Match match = regex.Match(_Email);
             //if (!match.Success)
@@ -149,6 +147,7 @@ namespace BusinessObjects
         #endregion
 
         #region Public Methods
+
         public ItemGroup Save(Database database, Guid ParentID)
         {
             _UserID = ParentID; // How these get linked together. See UserFriendList.cs Comment: CONNECTAddress

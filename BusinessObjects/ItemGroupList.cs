@@ -9,7 +9,7 @@ using System.ComponentModel;
 
 namespace BusinessObjects
 {
-    class ItemGroupList : Event
+    public class ItemGroupList : Event
     {
         #region Private Members
         private BindingList<ItemGroup> _List;
@@ -46,13 +46,7 @@ namespace BusinessObjects
                 _List.Add(ig);
             }
             return this;
-        }
-
-        private void Ig_Savable(SavableEventArgs e)
-        {
-            RaiseEvent(e);
-            //push
-        }
+        }        
 
         public bool Save(Database database, Guid parentID)
         {
@@ -94,12 +88,15 @@ namespace BusinessObjects
         {
             e.NewObject = new ItemGroup();
             ItemGroup ig = (ItemGroup)e.NewObject;
-            
-            //ig.Savable
+
+            ig.Savable += Ig_Savable;
             //todo: put more code here
 
         }
-        
+        private void Ig_Savable(SavableEventArgs e)
+        {
+            RaiseEvent(e);
+        }
         #endregion
 
         #region Construction

@@ -56,10 +56,17 @@
             this.menuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.logOutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tvGroupList = new System.Windows.Forms.TreeView();
+            this.gbItems = new System.Windows.Forms.GroupBox();
+            this.txtGroupName = new System.Windows.Forms.TextBox();
+            this.btnAddGroup = new System.Windows.Forms.Button();
+            this.dgvItemList = new System.Windows.Forms.DataGridView();
             this.gbSecurityCheck.SuspendLayout();
             this.gbRegister.SuspendLayout();
             this.gbLoginForgotPassword.SuspendLayout();
             this.menuStrip1.SuspendLayout();
+            this.gbItems.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvItemList)).BeginInit();
             this.SuspendLayout();
             // 
             // btnSubmit
@@ -67,7 +74,7 @@
             this.btnSubmit.Location = new System.Drawing.Point(46, 136);
             this.btnSubmit.Name = "btnSubmit";
             this.btnSubmit.Size = new System.Drawing.Size(166, 35);
-            this.btnSubmit.TabIndex = 1;
+            this.btnSubmit.TabIndex = 2;
             this.btnSubmit.Text = "Login";
             this.btnSubmit.UseVisualStyleBackColor = true;
             this.btnSubmit.Click += new System.EventHandler(this.btnSubmit_Click);
@@ -85,7 +92,7 @@
             this.txtPassword.Location = new System.Drawing.Point(24, 86);
             this.txtPassword.Name = "txtPassword";
             this.txtPassword.Size = new System.Drawing.Size(209, 26);
-            this.txtPassword.TabIndex = 2;
+            this.txtPassword.TabIndex = 1;
             this.txtPassword.Text = "Password";
             // 
             // btnRegister
@@ -329,11 +336,58 @@
             this.exitToolStripMenuItem.Size = new System.Drawing.Size(161, 30);
             this.exitToolStripMenuItem.Text = "Exit";
             // 
+            // tvGroupList
+            // 
+            this.tvGroupList.Location = new System.Drawing.Point(6, 89);
+            this.tvGroupList.Name = "tvGroupList";
+            this.tvGroupList.Size = new System.Drawing.Size(209, 380);
+            this.tvGroupList.TabIndex = 19;
+            // 
+            // gbItems
+            // 
+            this.gbItems.Controls.Add(this.txtGroupName);
+            this.gbItems.Controls.Add(this.btnAddGroup);
+            this.gbItems.Controls.Add(this.dgvItemList);
+            this.gbItems.Controls.Add(this.tvGroupList);
+            this.gbItems.Location = new System.Drawing.Point(405, 460);
+            this.gbItems.Name = "gbItems";
+            this.gbItems.Size = new System.Drawing.Size(907, 550);
+            this.gbItems.TabIndex = 20;
+            this.gbItems.TabStop = false;
+            this.gbItems.Text = "Items";
+            // 
+            // txtGroupName
+            // 
+            this.txtGroupName.Location = new System.Drawing.Point(6, 42);
+            this.txtGroupName.Name = "txtGroupName";
+            this.txtGroupName.Size = new System.Drawing.Size(202, 26);
+            this.txtGroupName.TabIndex = 22;
+            // 
+            // btnAddGroup
+            // 
+            this.btnAddGroup.Location = new System.Drawing.Point(6, 475);
+            this.btnAddGroup.Name = "btnAddGroup";
+            this.btnAddGroup.Size = new System.Drawing.Size(209, 37);
+            this.btnAddGroup.TabIndex = 21;
+            this.btnAddGroup.Text = "Add";
+            this.btnAddGroup.UseVisualStyleBackColor = true;
+            this.btnAddGroup.Click += new System.EventHandler(this.btnAddGroup_Click);
+            // 
+            // dgvItemList
+            // 
+            this.dgvItemList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvItemList.Location = new System.Drawing.Point(221, 89);
+            this.dgvItemList.Name = "dgvItemList";
+            this.dgvItemList.RowTemplate.Height = 28;
+            this.dgvItemList.Size = new System.Drawing.Size(675, 423);
+            this.dgvItemList.TabIndex = 20;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1369, 1047);
+            this.Controls.Add(this.gbItems);
             this.Controls.Add(this.gbLoginForgotPassword);
             this.Controls.Add(this.gbRegister);
             this.Controls.Add(this.gbSecurityCheck);
@@ -352,6 +406,9 @@
             this.gbLoginForgotPassword.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            this.gbItems.ResumeLayout(false);
+            this.gbItems.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvItemList)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -387,6 +444,11 @@
         private System.Windows.Forms.ToolStripMenuItem menuToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem logOutToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
+        private System.Windows.Forms.TreeView tvGroupList;
+        private System.Windows.Forms.GroupBox gbItems;
+        private System.Windows.Forms.DataGridView dgvItemList;
+        private System.Windows.Forms.Button btnAddGroup;
+        private System.Windows.Forms.TextBox txtGroupName;
     }
 }
 

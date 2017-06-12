@@ -8,12 +8,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using BusinessObjects;
+using DatabaseHelper;
 
 namespace ItemManager
 {
     public partial class Form1 : Form
     {
-        User user = new User();
+        User user;
         SecurityQuestionsList Questions1;
         SecurityQuestionsList Questions2;
         SecurityQuestionsList Questions3;
@@ -23,6 +24,12 @@ namespace ItemManager
         Guid CQ1G = Guid.Empty;
         Guid CQ2G = Guid.Empty;
         Guid CQ3G = Guid.Empty;
+        Guid LoginToken = Guid.Empty;
+        TreeNode tnIGList, tnIGList2;
+        Database DB;
+        ItemGroup IG;
+        ItemGroupList IGList;
+        SecurityQuestionsList SQList;
         static Form1 F;
         public Form1()
         {
@@ -31,10 +38,35 @@ namespace ItemManager
 
         private void btnSubmit_Click(object sender, EventArgs e)
         {
+            user = new User();
             user = user.Login(txtLogin.Text, txtPassword.Text);
             if (user != null)
             {
-                
+                tnIGList = new TreeNode();
+                tnIGList2 = new TreeNode();
+                IGList = new ItemGroupList();
+                LoginToken = user.ID;
+                IGList.GetByUserID(LoginToken);
+                tvGroupList.Nodes.Add(tnIGList);
+                tnIGList.Text = "Collections";
+                gbItems.Visible = true;
+
+
+                //foreach (ItemGroup IG in IGList.List)
+                //{
+                //    tnIGList2.Nodes.Add(IG.Name);
+                //    tnIGList2.Text = IG.Name;
+                //    tvGroupList.Nodes.Add(tnIGList2);
+                //    tnIGList2.Text = string.Empty;
+                //}
+
+
+                //tnIGList = IGList.GetByUserID(LoginToken);// Left off here. trying to get ItemGroupList to populate treeview but if nulls are present,
+                //it needs to not populate it but not have any issues.
+            }
+            if (user == null)
+            {
+                MessageBox.Show("Invalid login. Check your credentials and try again.", "Login Error!", MessageBoxButtons.OK);
             }
         }
 
@@ -50,15 +82,15 @@ namespace ItemManager
                 MessageBox.Show("Please ensure all security questions are different.", "Error!", MessageBoxButtons.OK);
             }
         }
-
         private void Form1_Load(object sender, EventArgs e)
         {
 
             gbLoginForgotPassword.Visible = true;
             gbRegister.Visible = false;
-            gbSecurityCheck.Visible = false;  
+            gbSecurityCheck.Visible = false;
+            gbItems.Visible = false;
             //this.Size = new Size(346, 425);
-            
+
 
             //F.Width = 346;
             //F.Height = 425;
@@ -75,7 +107,6 @@ namespace ItemManager
 
             }
         }
-
         private void btnNewRegister_Click(object sender, EventArgs e)
         {
             gbLoginForgotPassword.Visible = false;
@@ -116,7 +147,6 @@ namespace ItemManager
             CQ3G = Guid.Parse(CQ3);
             cmbQuestion3.SelectedIndexChanged += CmbQuestion3_SelectedIndexChanged;
         }
-
         private void btnSend_Click(object sender, EventArgs e)
         {
             try
@@ -140,7 +170,6 @@ namespace ItemManager
                 throw;
             }
         }
-
         private void CmbQuestion1_SelectedIndexChanged(object sender, EventArgs e)
         {
             cmbQuestion1.DataSource = Questions1.List;
@@ -159,10 +188,24 @@ namespace ItemManager
             CQ3 = cmbQuestion3.SelectedValue.ToString();
             CQ3G = Guid.Parse(CQ3);
         }
-
         private void logOutToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Application.Restart();
+        }
+        private void btnAddGroup_Click(object sender, EventArgs e)
+        {
+            //IGList = new ItemGroupList();
+            IG = new ItemGroup();
+            IG.Name = txtGroupName.Text;
+            user.ItemGroup.List.Add(IG);
+            //IGList.List.Add(IG);
+            user.Save();
+            //tvGroupList.Nodes.Add(new TreeNode(txtGroupName.Text));
+            //foreach (ItemGroup IG in IGList.List)
+            //    {
+            //        tvGroupList.Nodes.Add(tnIGList2);
+            //    }
+            //
         }
     }
 }

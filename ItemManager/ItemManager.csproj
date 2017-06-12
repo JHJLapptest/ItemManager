@@ -88,6 +88,10 @@
       <Project>{61bb5619-37ec-426d-9075-f8eda70c5ee1}</Project>
       <Name>BusinessObjects</Name>
     </ProjectReference>
+    <ProjectReference Include="..\DatabaseHelper\DatabaseHelper.csproj">
+      <Project>{e43da0ae-6b0a-4279-a82f-ba1409071094}</Project>
+      <Name>DatabaseHelper</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
