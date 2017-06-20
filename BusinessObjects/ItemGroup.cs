@@ -14,6 +14,7 @@ namespace BusinessObjects
         #region Private Members
         private string _Name;
         private Guid _UserID;
+        private ItemList _ItemList = null;
         private BrokenRuleList _BrokenRules = new BrokenRuleList();
         #endregion
 
@@ -49,6 +50,19 @@ namespace BusinessObjects
                 }
             }
         }
+        public ItemList ItemList
+        {
+            get
+            {
+                if (_ItemList == null)
+                {
+                    _ItemList = new ItemList();
+                    _ItemList = _ItemList.GetByItemGroup(ID);
+                }
+                return _ItemList;
+            }
+        }
+
         //public void pubInsert(Database database)
         //{
         //    Insert(database);
@@ -132,6 +146,7 @@ namespace BusinessObjects
                 BrokenRule br = new BrokenRule("Please name your collection.");
                 _BrokenRules.List.Add(br);
             }
+
             //Regex regex = new Regex(@"^\w+@[a-zA-Z_]+?\.[a-zA-Z]+?\.[a-zA-Z]{2,3}$");
             //Match match = regex.Match(_Email);
             //if (!match.Success)
@@ -170,13 +185,18 @@ namespace BusinessObjects
                 base.IsNew = false;
                 base.IsDirty = false;
             }
+            if (result == true && ItemList.IsSavable() == true)
+            {
+                result = _ItemList.Save(database, base.ID);
+            }
             return this;
         }
         public bool IsSavable()
         {
             bool result = false;
 
-            if (base.IsDirty == true && IsValid() == true)
+            if ((base.IsDirty == true && IsValid() == true) 
+                || (_ItemList != null && _ItemList.IsSavable() == true))
             {
                 result = true;
             }

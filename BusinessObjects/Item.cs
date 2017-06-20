@@ -9,7 +9,7 @@ using DatabaseHelper;
 
 namespace BusinessObjects
 {
-    class Item : HeaderData
+    public class Item : HeaderData
     {
         #region Private Members
         private Guid _ItemGroupID;
@@ -273,29 +273,29 @@ namespace BusinessObjects
             }
             else return null;
         }
-        public Item GetByItemGroup(Guid ID)
-        {
-            Database database = new Database("ItemManager");
-            DataTable dt = new DataTable();
-            database.Command.Parameters.Clear();
-            database.Command.CommandType = CommandType.StoredProcedure;
-            database.Command.CommandText = "tblItemGetByItemGroupID";
-            database.Command.Parameters.Add("@ItemGroupID", SqlDbType.UniqueIdentifier).Value = _ItemGroupID;
+        //public Item GetByItemGroup(Guid IG)
+        //{
+        //    Database database = new Database("ItemManager");
+        //    DataTable dt = new DataTable();
+        //    database.Command.Parameters.Clear();
+        //    database.Command.CommandType = CommandType.StoredProcedure;
+        //    database.Command.CommandText = "tblItemGetByItemGroupID";
+        //    database.Command.Parameters.Add("@ItemGroupID", SqlDbType.UniqueIdentifier).Value = _ItemGroupID;
 
-            base.Initialize(database, base.ID);
-            database.ExecuteNonQueryJWithTransaction();
-            base.Initialize(database.Command);
-            if (dt != null && dt.Rows.Count == 1)
-            {
-                DataRow dr = dt.Rows[0];
-                base.Initialize(dr);
-                InitializeBusinessData(dr);
-                base.IsNew = false;
-                base.IsDirty = false;
-                return this;
-            }
-            else return null;
-        }
+        //    base.Initialize(database, base.ID);
+        //    database.ExecuteNonQueryJWithTransaction();
+        //    base.Initialize(database.Command);
+        //    if (dt != null && dt.Rows.Count == 1)
+        //    {
+        //        DataRow dr = dt.Rows[0];
+        //        base.Initialize(dr);
+        //        InitializeBusinessData(dr);
+        //        base.IsNew = false;
+        //        base.IsDirty = false;
+        //        return this;
+        //    }
+        //    else return null;
+        //}
         public bool SwitchStatus(Database database)
         {
             bool result = true;
@@ -317,6 +317,41 @@ namespace BusinessObjects
             }
             return result;
         }
+        public Item Save(Database database, Guid ParentID)
+        {
+            _ItemGroupID = ParentID; // How these get linked together. See UserFriendList.cs Comment: CONNECTAddress
+
+            bool result = true;
+            if (base.IsNew == true && IsSavable() == true)
+            {
+                result = Insert(database);
+            }
+            else if (base.Deleted == true && base.IsDirty == true)
+            {
+                result = Delete(database);
+            }
+            else if (base.IsNew == false && IsSavable() == true)
+            {
+                result = Update(database);
+            }
+            if (result == true)
+            {
+                base.IsNew = false;
+                base.IsDirty = false;
+            }
+            return this;
+        }
+        public bool IsSavable()
+        {
+            bool result = false;
+
+            if (base.IsDirty == true && IsValid() == true)
+            {
+                result = true;
+            }
+            return result;
+        }
+
         public void InitializeBusinessData(DataRow dr)
         {
             _ItemGroupID = (Guid)dr["ItemGroupID"];

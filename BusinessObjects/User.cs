@@ -114,7 +114,7 @@ namespace BusinessObjects
                 return _Questions;
             }
         }
-        public ItemGroupList ItemGroup
+        public ItemGroupList ItemGroups
         {
             get
             {
@@ -274,7 +274,7 @@ namespace BusinessObjects
                 base.IsNew = false;
                 base.IsDirty = false;
             }
-            if (result == true && ItemGroup.IsSavable() == true)
+            if (result == true && ItemGroups.IsSavable() == true)
             {
                 result = _ItemGroup.Save(database, base.ID);
             }
@@ -282,6 +282,7 @@ namespace BusinessObjects
             {
                 result = _Questions.Save(database, base.ID);
             }
+
             if (result == true)
             {
                 database.EndTransaction();
@@ -296,7 +297,8 @@ namespace BusinessObjects
         {
             bool result = false;
 
-            if ((base.IsDirty == true && IsValid() == true) || (_ItemGroup != null && _ItemGroup.IsSavable() == true)
+            if ((base.IsDirty == true && IsValid() == true) 
+                || (_ItemGroup != null && _ItemGroup.IsSavable() == true)
                 || (_Questions != null && _Questions.IsSavable()))
             {
                 result = true;

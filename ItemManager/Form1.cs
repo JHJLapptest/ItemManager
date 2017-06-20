@@ -27,13 +27,39 @@ namespace ItemManager
         Guid LoginToken = Guid.Empty;
         TreeNode tnIGList, tnIGList2;
         Database DB;
+        Item item;
+        ItemList iList = new ItemList();
         ItemGroup IG;
         ItemGroupList IGList;
         SecurityQuestionsList SQList;
+        ItemGroup temp = new ItemGroup();
         static Form1 F;
         public Form1()
         {
             InitializeComponent();
+            this.tvGroupList.NodeMouseClick += TvGroupList_NodeMouseClick;
+            dgvItemList.AutoGenerateColumns = false;
+        }
+
+        private void TvGroupList_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
+        {
+            IG = new ItemGroup();
+            
+            var hit = tvGroupList.HitTest(e.Location);
+            if (hit.Location == TreeViewHitTestLocations.Label)
+            {
+                foreach (ItemGroup IG in IGList.List)
+                {
+                    if (e.Node.Text == IG.Name)
+                    {
+                        //dgvItemList.DataSource = iList.GetByItemGroup(IG.ID);
+                        dgvItemList.DataSource = IG.ItemList.List;
+                        temp = IG;
+                        break;
+                    }
+                }
+                
+            }
         }
 
         private void btnSubmit_Click(object sender, EventArgs e)
@@ -45,24 +71,19 @@ namespace ItemManager
                 tnIGList = new TreeNode();
                 tnIGList2 = new TreeNode();
                 IGList = new ItemGroupList();
-                LoginToken = user.ID;
-                IGList.GetByUserID(LoginToken);
+                //LoginToken = user.ID;
+                IGList.GetByUserID(user.ID);
                 tvGroupList.Nodes.Add(tnIGList);
+                tvGroupList.Nodes.Add(tnIGList2);
                 tnIGList.Text = "Collections";
                 gbItems.Visible = true;
-
-
-                //foreach (ItemGroup IG in IGList.List)
-                //{
-                //    tnIGList2.Nodes.Add(IG.Name);
-                //    tnIGList2.Text = IG.Name;
-                //    tvGroupList.Nodes.Add(tnIGList2);
-                //    tnIGList2.Text = string.Empty;
-                //}
-
-
-                //tnIGList = IGList.GetByUserID(LoginToken);// Left off here. trying to get ItemGroupList to populate treeview but if nulls are present,
-                //it needs to not populate it but not have any issues.
+                IG = new ItemGroup();
+                //tvGroupList.Nodes.Add(new TreeNode(txtGroupName.Text));
+                ItemGroupList Collections = user.ItemGroups;
+                foreach (ItemGroup IG in Collections.List)
+                {
+                    tnIGList2.Nodes.Add(new TreeNode(IG.Name));
+                }
             }
             if (user == null)
             {
@@ -192,20 +213,49 @@ namespace ItemManager
         {
             Application.Restart();
         }
+
+        private void btnItemAddItem_Click(object sender, EventArgs e)
+        {
+            item = new Item();
+            IG = temp;
+            
+            item.Name = txtItemName.Text;
+            item.Type = txtItemType.Text;
+            item.WishListStatus = chkItemWishlist.Checked;
+            item.Quantity = int.Parse(txtItemQuantity.Text);
+            item.Value = decimal.Parse(txtItemValue.Text);
+            
+            IG.ItemList.List.Add(item);
+            user.ItemGroups.List.Add(IG);
+            user.Save();
+
+            #region Empty Text Boxes
+            txtItemName.Text = string.Empty;
+            txtItemType.Text = string.Empty;
+            txtItemQuantity.Text = string.Empty;
+            txtItemValue.Text = string.Empty;
+            chkItemWishlist.Checked = false;
+            #endregion
+
+        }
+
         private void btnAddGroup_Click(object sender, EventArgs e)
         {
             //IGList = new ItemGroupList();
+
             IG = new ItemGroup();
             IG.Name = txtGroupName.Text;
-            user.ItemGroup.List.Add(IG);
+            user.ItemGroups.List.Add(IG);
+            
             //IGList.List.Add(IG);
             user.Save();
-            //tvGroupList.Nodes.Add(new TreeNode(txtGroupName.Text));
+            tvGroupList.Nodes.Add(new TreeNode(txtGroupName.Text));
             //foreach (ItemGroup IG in IGList.List)
-            //    {
-            //        tvGroupList.Nodes.Add(tnIGList2);
-            //    }
-            //
+            //{
+            //    tnIGList2.Nodes.Add(new TreeNode(IG.Name));
+            //}
+
         }
+        
     }
 }

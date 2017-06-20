@@ -61,12 +61,25 @@
             this.txtGroupName = new System.Windows.Forms.TextBox();
             this.btnAddGroup = new System.Windows.Forms.Button();
             this.dgvItemList = new System.Windows.Forms.DataGridView();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.txtItemValue = new System.Windows.Forms.TextBox();
+            this.chkItemWishlist = new System.Windows.Forms.CheckBox();
+            this.txtItemQuantity = new System.Windows.Forms.TextBox();
+            this.txtItemType = new System.Windows.Forms.TextBox();
+            this.txtItemName = new System.Windows.Forms.TextBox();
+            this.btnItemAddItem = new System.Windows.Forms.Button();
+            this.ItemName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ItemType = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ItemQuantity = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ItemValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ItemWishlist = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.gbSecurityCheck.SuspendLayout();
             this.gbRegister.SuspendLayout();
             this.gbLoginForgotPassword.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.gbItems.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvItemList)).BeginInit();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnSubmit
@@ -375,18 +388,123 @@
             // 
             // dgvItemList
             // 
+            this.dgvItemList.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvItemList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvItemList.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.ItemName,
+            this.ItemType,
+            this.ItemQuantity,
+            this.ItemValue,
+            this.ItemWishlist});
             this.dgvItemList.Location = new System.Drawing.Point(221, 89);
             this.dgvItemList.Name = "dgvItemList";
             this.dgvItemList.RowTemplate.Height = 28;
             this.dgvItemList.Size = new System.Drawing.Size(675, 423);
             this.dgvItemList.TabIndex = 20;
             // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.txtItemValue);
+            this.groupBox1.Controls.Add(this.chkItemWishlist);
+            this.groupBox1.Controls.Add(this.txtItemQuantity);
+            this.groupBox1.Controls.Add(this.txtItemType);
+            this.groupBox1.Controls.Add(this.txtItemName);
+            this.groupBox1.Controls.Add(this.btnItemAddItem);
+            this.groupBox1.Location = new System.Drawing.Point(34, 549);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(365, 423);
+            this.groupBox1.TabIndex = 21;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "groupBox1";
+            // 
+            // txtItemValue
+            // 
+            this.txtItemValue.Location = new System.Drawing.Point(24, 241);
+            this.txtItemValue.Name = "txtItemValue";
+            this.txtItemValue.Size = new System.Drawing.Size(142, 26);
+            this.txtItemValue.TabIndex = 29;
+            this.txtItemValue.Text = "Value";
+            // 
+            // chkItemWishlist
+            // 
+            this.chkItemWishlist.AutoSize = true;
+            this.chkItemWishlist.Location = new System.Drawing.Point(24, 146);
+            this.chkItemWishlist.Name = "chkItemWishlist";
+            this.chkItemWishlist.Size = new System.Drawing.Size(98, 24);
+            this.chkItemWishlist.TabIndex = 28;
+            this.chkItemWishlist.Text = "Wishlist?";
+            this.chkItemWishlist.UseVisualStyleBackColor = true;
+            // 
+            // txtItemQuantity
+            // 
+            this.txtItemQuantity.Location = new System.Drawing.Point(24, 191);
+            this.txtItemQuantity.Name = "txtItemQuantity";
+            this.txtItemQuantity.Size = new System.Drawing.Size(142, 26);
+            this.txtItemQuantity.TabIndex = 27;
+            this.txtItemQuantity.Text = "Quantity";
+            // 
+            // txtItemType
+            // 
+            this.txtItemType.Location = new System.Drawing.Point(24, 93);
+            this.txtItemType.Name = "txtItemType";
+            this.txtItemType.Size = new System.Drawing.Size(142, 26);
+            this.txtItemType.TabIndex = 24;
+            this.txtItemType.Text = "Type";
+            // 
+            // txtItemName
+            // 
+            this.txtItemName.Location = new System.Drawing.Point(24, 43);
+            this.txtItemName.Name = "txtItemName";
+            this.txtItemName.Size = new System.Drawing.Size(142, 26);
+            this.txtItemName.TabIndex = 23;
+            this.txtItemName.Text = "Name";
+            // 
+            // btnItemAddItem
+            // 
+            this.btnItemAddItem.Location = new System.Drawing.Point(24, 307);
+            this.btnItemAddItem.Name = "btnItemAddItem";
+            this.btnItemAddItem.Size = new System.Drawing.Size(108, 36);
+            this.btnItemAddItem.TabIndex = 22;
+            this.btnItemAddItem.Text = "Add Item";
+            this.btnItemAddItem.UseVisualStyleBackColor = true;
+            this.btnItemAddItem.Click += new System.EventHandler(this.btnItemAddItem_Click);
+            // 
+            // ItemName
+            // 
+            this.ItemName.DataPropertyName = "Name";
+            this.ItemName.HeaderText = "Name";
+            this.ItemName.Name = "ItemName";
+            // 
+            // ItemType
+            // 
+            this.ItemType.DataPropertyName = "Type";
+            this.ItemType.HeaderText = "Type";
+            this.ItemType.Name = "ItemType";
+            // 
+            // ItemQuantity
+            // 
+            this.ItemQuantity.DataPropertyName = "Quantity";
+            this.ItemQuantity.HeaderText = "Quantity";
+            this.ItemQuantity.Name = "ItemQuantity";
+            // 
+            // ItemValue
+            // 
+            this.ItemValue.DataPropertyName = "Value";
+            this.ItemValue.HeaderText = "Value";
+            this.ItemValue.Name = "ItemValue";
+            // 
+            // ItemWishlist
+            // 
+            this.ItemWishlist.DataPropertyName = "WishListStatus";
+            this.ItemWishlist.HeaderText = "Wishlist";
+            this.ItemWishlist.Name = "ItemWishlist";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1369, 1047);
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.gbItems);
             this.Controls.Add(this.gbLoginForgotPassword);
             this.Controls.Add(this.gbRegister);
@@ -409,6 +527,8 @@
             this.gbItems.ResumeLayout(false);
             this.gbItems.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvItemList)).EndInit();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -449,6 +569,18 @@
         private System.Windows.Forms.DataGridView dgvItemList;
         private System.Windows.Forms.Button btnAddGroup;
         private System.Windows.Forms.TextBox txtGroupName;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.TextBox txtItemValue;
+        private System.Windows.Forms.CheckBox chkItemWishlist;
+        private System.Windows.Forms.TextBox txtItemQuantity;
+        private System.Windows.Forms.TextBox txtItemType;
+        private System.Windows.Forms.TextBox txtItemName;
+        private System.Windows.Forms.Button btnItemAddItem;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ItemName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ItemType;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ItemQuantity;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ItemValue;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn ItemWishlist;
     }
 }
 
