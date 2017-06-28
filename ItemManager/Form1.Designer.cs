@@ -61,6 +61,11 @@
             this.txtGroupName = new System.Windows.Forms.TextBox();
             this.btnAddGroup = new System.Windows.Forms.Button();
             this.dgvItemList = new System.Windows.Forms.DataGridView();
+            this.ItemName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ItemType = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ItemQuantity = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ItemValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ItemWishlist = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.txtItemValue = new System.Windows.Forms.TextBox();
             this.chkItemWishlist = new System.Windows.Forms.CheckBox();
@@ -68,11 +73,6 @@
             this.txtItemType = new System.Windows.Forms.TextBox();
             this.txtItemName = new System.Windows.Forms.TextBox();
             this.btnItemAddItem = new System.Windows.Forms.Button();
-            this.ItemName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ItemType = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ItemQuantity = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ItemValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ItemWishlist = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.gbSecurityCheck.SuspendLayout();
             this.gbRegister.SuspendLayout();
             this.gbLoginForgotPassword.SuspendLayout();
@@ -351,6 +351,7 @@
             // 
             // tvGroupList
             // 
+            this.tvGroupList.HideSelection = false;
             this.tvGroupList.Location = new System.Drawing.Point(6, 89);
             this.tvGroupList.Name = "tvGroupList";
             this.tvGroupList.Size = new System.Drawing.Size(209, 380);
@@ -401,6 +402,36 @@
             this.dgvItemList.RowTemplate.Height = 28;
             this.dgvItemList.Size = new System.Drawing.Size(675, 423);
             this.dgvItemList.TabIndex = 20;
+            // 
+            // ItemName
+            // 
+            this.ItemName.DataPropertyName = "Name";
+            this.ItemName.HeaderText = "Name";
+            this.ItemName.Name = "ItemName";
+            // 
+            // ItemType
+            // 
+            this.ItemType.DataPropertyName = "Type";
+            this.ItemType.HeaderText = "Type";
+            this.ItemType.Name = "ItemType";
+            // 
+            // ItemQuantity
+            // 
+            this.ItemQuantity.DataPropertyName = "Quantity";
+            this.ItemQuantity.HeaderText = "Quantity";
+            this.ItemQuantity.Name = "ItemQuantity";
+            // 
+            // ItemValue
+            // 
+            this.ItemValue.DataPropertyName = "Value";
+            this.ItemValue.HeaderText = "Value";
+            this.ItemValue.Name = "ItemValue";
+            // 
+            // ItemWishlist
+            // 
+            this.ItemWishlist.DataPropertyName = "WishListStatus";
+            this.ItemWishlist.HeaderText = "Wishlist";
+            this.ItemWishlist.Name = "ItemWishlist";
             // 
             // groupBox1
             // 
@@ -468,36 +499,6 @@
             this.btnItemAddItem.Text = "Add Item";
             this.btnItemAddItem.UseVisualStyleBackColor = true;
             this.btnItemAddItem.Click += new System.EventHandler(this.btnItemAddItem_Click);
-            // 
-            // ItemName
-            // 
-            this.ItemName.DataPropertyName = "Name";
-            this.ItemName.HeaderText = "Name";
-            this.ItemName.Name = "ItemName";
-            // 
-            // ItemType
-            // 
-            this.ItemType.DataPropertyName = "Type";
-            this.ItemType.HeaderText = "Type";
-            this.ItemType.Name = "ItemType";
-            // 
-            // ItemQuantity
-            // 
-            this.ItemQuantity.DataPropertyName = "Quantity";
-            this.ItemQuantity.HeaderText = "Quantity";
-            this.ItemQuantity.Name = "ItemQuantity";
-            // 
-            // ItemValue
-            // 
-            this.ItemValue.DataPropertyName = "Value";
-            this.ItemValue.HeaderText = "Value";
-            this.ItemValue.Name = "ItemValue";
-            // 
-            // ItemWishlist
-            // 
-            this.ItemWishlist.DataPropertyName = "WishListStatus";
-            this.ItemWishlist.HeaderText = "Wishlist";
-            this.ItemWishlist.Name = "ItemWishlist";
             // 
             // Form1
             // 

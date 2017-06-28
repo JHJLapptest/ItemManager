@@ -25,15 +25,19 @@ namespace ItemManager
         Guid CQ2G = Guid.Empty;
         Guid CQ3G = Guid.Empty;
         Guid LoginToken = Guid.Empty;
-        TreeNode tnIGList, tnIGList2;
+        TreeNode tnIGList, tnIGList2, tnIGList3;
         Database DB;
         Item item;
-        ItemList iList = new ItemList();
+        ItemList iList;
+        ItemList icList = new ItemList();
+        ItemList iwList = new ItemList();
         ItemGroup IG;
         ItemGroupList IGList;
         SecurityQuestionsList SQList;
         ItemGroup temp = new ItemGroup();
+        TreeNode selectedNode = new TreeNode();
         static Form1 F;
+
         public Form1()
         {
             InitializeComponent();
@@ -44,21 +48,55 @@ namespace ItemManager
         private void TvGroupList_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
         {
             IG = new ItemGroup();
-            
+            IGList = new ItemGroupList();
+            iList = new ItemList();
+            IGList.GetByUserID(user.ID);
             var hit = tvGroupList.HitTest(e.Location);
             if (hit.Location == TreeViewHitTestLocations.Label)
             {
+                selectedNode = hit.Node;
+                iwList.List.Clear();
+                icList.List.Clear();
+                dgvItemList.DataSource = null;
                 foreach (ItemGroup IG in IGList.List)
                 {
-                    if (e.Node.Text == IG.Name)
+                    if (e.Node.Text == IG.Name && e.Node.Level == 1 && e.Node.Parent.Text == "Collections")
                     {
-                        //dgvItemList.DataSource = iList.GetByItemGroup(IG.ID);
-                        dgvItemList.DataSource = IG.ItemList.List;
                         temp = IG;
-                        break;
+                        foreach (Item it in IG.ItemList.List)
+                        {
+                            if (it.WishListStatus == false)
+                            {
+                                icList.List.Add(it);
+                                dgvItemList.DataSource = icList.List;
+                            }
+                            else
+                            {
+                                //Do Nothing
+                            }
+                        }
+                    }
+                    else if (e.Node.Text == IG.Name && e.Node.Level == 1 && e.Node.Parent.Text == "Wishlist")
+                    {
+                        temp = IG;
+                        foreach (Item it in IG.ItemList.List)
+                        {
+                            if (it.WishListStatus == true)
+                            {
+                                iwList.List.Add(it);
+                                dgvItemList.DataSource = iwList.List;
+                            }
+                            else
+                            {
+                                //Do Nothing
+                            }
+                        }
                     }
                 }
-                
+            }
+            else
+            {
+                //Do Nothing.
             }
         }
 
@@ -70,19 +108,28 @@ namespace ItemManager
             {
                 tnIGList = new TreeNode();
                 tnIGList2 = new TreeNode();
+                tnIGList3 = new TreeNode();
                 IGList = new ItemGroupList();
-                //LoginToken = user.ID;
                 IGList.GetByUserID(user.ID);
                 tvGroupList.Nodes.Add(tnIGList);
                 tvGroupList.Nodes.Add(tnIGList2);
                 tnIGList.Text = "Collections";
+                tnIGList.Tag = IGList;
+                tnIGList2.Text = "Wishlist";
                 gbItems.Visible = true;
                 IG = new ItemGroup();
-                //tvGroupList.Nodes.Add(new TreeNode(txtGroupName.Text));
-                ItemGroupList Collections = user.ItemGroups;
+                ItemGroupList Collections = (ItemGroupList)tnIGList.Tag;
+                
                 foreach (ItemGroup IG in Collections.List)
                 {
-                    tnIGList2.Nodes.Add(new TreeNode(IG.Name));
+                    TreeNode tmp = new TreeNode(IG.Name);
+                    if (tmp.Text == IG.Name)
+                    {
+                        tmp.Tag = IG;
+
+                        tnIGList.Nodes.Add(tmp.Text);
+                        tnIGList2.Nodes.Add(tmp.Text);
+                    }
                 }
             }
             if (user == null)
@@ -110,12 +157,6 @@ namespace ItemManager
             gbRegister.Visible = false;
             gbSecurityCheck.Visible = false;
             gbItems.Visible = false;
-            //this.Size = new Size(346, 425);
-
-
-            //F.Width = 346;
-            //F.Height = 425;
-
         }
         private void btnForgotPassword_Click(object sender, EventArgs e)
         {
@@ -125,7 +166,6 @@ namespace ItemManager
             {
                 this.gbSecurityCheck.Visible = true;
                 this.lblQuestionCheck.Text = user.Questions.List[0].QuestionText;
-
             }
         }
         private void btnNewRegister_Click(object sender, EventArgs e)
@@ -133,8 +173,6 @@ namespace ItemManager
             gbLoginForgotPassword.Visible = false;
             gbRegister.Visible = true;
             gbSecurityCheck.Visible = false;
-            //F.Width = 691;
-            //F.Height = 399;
 
             Questions1 = new SecurityQuestionsList();
             Questions2 = new SecurityQuestionsList();
@@ -229,6 +267,38 @@ namespace ItemManager
             user.ItemGroups.List.Add(IG);
             user.Save();
 
+            if (IG.Name == selectedNode.Text && selectedNode.Parent.Text == "Collections")
+            {
+                icList.List.Clear();
+                foreach (Item it in IG.ItemList.List)
+                {
+                    if (it.WishListStatus == false)
+                    {
+                        icList.List.Add(it);
+                        dgvItemList.DataSource = icList.List;
+                    }
+                    else
+                    {
+                        //Do Nothing
+                    }
+                }
+            }
+            else if (IG.Name == selectedNode.Text && selectedNode.Parent.Text == "Wishlist")
+            {
+                iwList.List.Clear();
+                foreach (Item it in IG.ItemList.List)
+                {
+                    if (it.WishListStatus == true)
+                    {
+                        iwList.List.Add(it);
+                        dgvItemList.DataSource = iwList.List;
+                    }
+                    else
+                    {
+                        //Do Nothing
+                    }
+                }
+            }
             #region Empty Text Boxes
             txtItemName.Text = string.Empty;
             txtItemType.Text = string.Empty;
@@ -236,26 +306,17 @@ namespace ItemManager
             txtItemValue.Text = string.Empty;
             chkItemWishlist.Checked = false;
             #endregion
-
         }
 
         private void btnAddGroup_Click(object sender, EventArgs e)
         {
-            //IGList = new ItemGroupList();
-
             IG = new ItemGroup();
             IG.Name = txtGroupName.Text;
             user.ItemGroups.List.Add(IG);
             
-            //IGList.List.Add(IG);
             user.Save();
-            tvGroupList.Nodes.Add(new TreeNode(txtGroupName.Text));
-            //foreach (ItemGroup IG in IGList.List)
-            //{
-            //    tnIGList2.Nodes.Add(new TreeNode(IG.Name));
-            //}
-
+            tnIGList.Nodes.Add(new TreeNode(txtGroupName.Text));
+            tnIGList2.Nodes.Add(new TreeNode(txtGroupName.Text));
         }
-        
     }
 }

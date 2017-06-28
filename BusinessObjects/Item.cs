@@ -273,6 +273,13 @@ namespace BusinessObjects
             }
             else return null;
         }
+        //public Item GetByWishlist(Guid ID)
+        //{
+        //    if (this.WishListStatus == true)
+        //    {
+        //        return ;
+        //    }
+        //}
         //public Item GetByItemGroup(Guid IG)
         //{
         //    Database database = new Database("ItemManager");

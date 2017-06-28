@@ -47,6 +47,24 @@ namespace BusinessObjects
             }
             return this;
         }
+        public bool GetByWishlistStatus (bool wishliststatus)
+        {
+            bool result = false;
+            foreach (Item il in List)
+            {
+                if (il.WishListStatus == true)
+                {
+                    result = true;
+                }
+                else
+                {
+                    result = false;
+                }
+            }
+
+
+            return result;
+        }
 
         public bool Save(Database database, Guid parentID)
         {
