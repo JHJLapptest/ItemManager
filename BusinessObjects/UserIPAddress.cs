@@ -9,11 +9,11 @@ using DatabaseHelper;
 
 namespace BusinessObjects
 {
-    class UserIPAddress
+    public class UserIPAddress : HeaderData
     {
         #region Private Members
         private string _IPAddress;
-        private string _TrustedIP;
+        private bool _TrustedIP;
         private Guid _UserID;
         private BrokenRuleList _BrokenRules = new BrokenRuleList();
         #endregion
@@ -32,12 +32,17 @@ namespace BusinessObjects
                 }
             }
         }
-        public string TrustedIP
+        public bool TrustedIP
         {
             get
             {
                 return _TrustedIP;
             }
+            //set
+            //{
+            //    _TrustedIP = value;
+            //    return value;
+            //}
         }
         public Guid UserID
         {
@@ -58,14 +63,14 @@ namespace BusinessObjects
 
 
 
-        public bool UserIPInsert(Database database)
+        public bool Insert(Database database)
         {
             bool result = true;
             try
             {
                 database.Command.Parameters.Clear();
                 database.Command.CommandType = CommandType.StoredProcedure;
-                database.Command.CommandText = "tblUserInsert";
+                database.Command.CommandText = "tblUserIPInsert";
                 database.Command.Parameters.Add("@DateAdded", SqlDbType.DateTime).Value = DateTime.Now;
                 database.Command.Parameters.Add("@IPAddress", SqlDbType.VarChar).Value = _IPAddress;
                 database.Command.Parameters.Add("@TrustedIP", SqlDbType.Bit).Value = _TrustedIP;
@@ -82,10 +87,53 @@ namespace BusinessObjects
             }
             return result;
         }
+        private bool Update(Database database)
+        {
+            bool result = true;
+            try
+            {
+                database.Command.Parameters.Clear();
+                database.Command.CommandType = CommandType.StoredProcedure;
+                database.Command.CommandText = "tblUserIPUpdate";
+                database.Command.Parameters.Add("@TrustedIP", SqlDbType.Bit).Value = _TrustedIP;
+                database.Command.Parameters.Add("@UserID", SqlDbType.UniqueIdentifier).Value = _UserID;
+
+                base.Initialize(database, base.ID);
+                database.ExecuteNonQueryJWithTransaction();
+                base.Initialize(database.Command);
+            }
+            catch (Exception ex)
+            {
+                result = false;
+                throw;
+            }
+            return result;
+        }
+        private bool Delete(Database database)
+        {
+            bool result = true;
+            try
+            {
+                database.Command.Parameters.Clear();
+                database.Command.CommandType = CommandType.StoredProcedure;
+                database.Command.CommandText = "tblUserIPDelete";
+
+                base.Initialize(database, base.ID);
+                database.ExecuteNonQueryJWithTransaction();
+                base.Initialize(database.Command);
+            }
+            catch (Exception ex)
+            {
+                result = false;
+                throw;
+            }
+            return result;
+        }
+
         public UserIPAddress()
         {
             _IPAddress = string.Empty;
-            _TrustedIP = string.Empty;
+            _TrustedIP = false;
             _UserID = Guid.Empty;
         }
     }

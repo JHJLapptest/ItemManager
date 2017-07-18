@@ -18,6 +18,8 @@ namespace ItemManager
         Form1 F;
         frmRegister RegForm;
         ForgotPassword FGForm;
+        UserIPAddress userIP;
+        string a4;
 
         public frmLogin()
         {
@@ -27,6 +29,7 @@ namespace ItemManager
         private void btnSubmit_Click(object sender, EventArgs e)
         {
             user = new User();
+            userIP = new UserIPAddress();
             user = user.Login(txtLogin.Text.ToUpper(), txtPassword.Text);
 
             if (user != null && txtPassword.Text == user.Password)
@@ -35,8 +38,12 @@ namespace ItemManager
                 F.Show();
                 F.Activate();
                 GetPublicIP();
+                string pubIP = a4;
+                if (pubIP == userIP.IPAddress && userIP.TrustedIP == true)
+                {
+                    this.Close();
+                }
 
-                this.Close();
             }
             else if (user == null || (user != null && txtPassword.Text != user.Password))
             {
