@@ -159,13 +159,13 @@ namespace BusinessObjects
             if (QuestionID == Guid.Empty)
             {
                 result = false;
-                BrokenRule br = new BrokenRule("Security answer must contain three letters or more.");
+                BrokenRule br = new BrokenRule("Security answer must contain three characters or more.");
                 _BrokenRules.List.Add(br);
             }
             if (Answer == null || _Answer.Trim() == string.Empty || _Answer.Length < 3)
             {
                 result = false;
-                BrokenRule br = new BrokenRule("Security answer must contain three letters or more.");
+                BrokenRule br = new BrokenRule("Security answer must contain three characters or more.");
                 _BrokenRules.List.Add(br);
             }
             //Regex regex = new Regex(@"^\w+@[a-zA-Z_]+?\.[a-zA-Z]+?\.[a-zA-Z]{2,3}$");

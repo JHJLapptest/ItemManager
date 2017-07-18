@@ -28,36 +28,15 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.btnSubmit = new System.Windows.Forms.Button();
-            this.txtLogin = new System.Windows.Forms.TextBox();
-            this.txtPassword = new System.Windows.Forms.TextBox();
-            this.btnRegister = new System.Windows.Forms.Button();
-            this.txtFirstName = new System.Windows.Forms.TextBox();
-            this.txtLastName = new System.Windows.Forms.TextBox();
-            this.txtUserName = new System.Windows.Forms.TextBox();
-            this.txtEmail = new System.Windows.Forms.TextBox();
-            this.txtPassword2 = new System.Windows.Forms.TextBox();
-            this.txtAns1 = new System.Windows.Forms.TextBox();
-            this.txtAns2 = new System.Windows.Forms.TextBox();
-            this.txtAns3 = new System.Windows.Forms.TextBox();
-            this.cmbQuestion1 = new System.Windows.Forms.ComboBox();
-            this.cmbQuestion2 = new System.Windows.Forms.ComboBox();
-            this.cmbQuestion3 = new System.Windows.Forms.ComboBox();
-            this.btnForgotPassword = new System.Windows.Forms.Button();
-            this.gbSecurityCheck = new System.Windows.Forms.GroupBox();
-            this.btnCancel = new System.Windows.Forms.Button();
-            this.lblQuestionCheck = new System.Windows.Forms.Label();
-            this.txtAnswerCheck = new System.Windows.Forms.TextBox();
-            this.btnSend = new System.Windows.Forms.Button();
-            this.gbRegister = new System.Windows.Forms.GroupBox();
-            this.gbLoginForgotPassword = new System.Windows.Forms.GroupBox();
-            this.btnNewRegister = new System.Windows.Forms.Button();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.menuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.logOutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tvGroupList = new System.Windows.Forms.TreeView();
             this.gbItems = new System.Windows.Forms.GroupBox();
+            this.btnItemSearch = new System.Windows.Forms.Button();
+            this.txtItemSearch = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.txtGroupName = new System.Windows.Forms.TextBox();
             this.btnAddGroup = new System.Windows.Forms.Button();
             this.dgvItemList = new System.Windows.Forms.DataGridView();
@@ -66,255 +45,16 @@
             this.ItemQuantity = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ItemValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ItemWishlist = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.txtItemValue = new System.Windows.Forms.TextBox();
             this.chkItemWishlist = new System.Windows.Forms.CheckBox();
             this.txtItemQuantity = new System.Windows.Forms.TextBox();
             this.txtItemType = new System.Windows.Forms.TextBox();
             this.txtItemName = new System.Windows.Forms.TextBox();
             this.btnItemAddItem = new System.Windows.Forms.Button();
-            this.gbSecurityCheck.SuspendLayout();
-            this.gbRegister.SuspendLayout();
-            this.gbLoginForgotPassword.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.gbItems.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvItemList)).BeginInit();
-            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // btnSubmit
-            // 
-            this.btnSubmit.Location = new System.Drawing.Point(46, 136);
-            this.btnSubmit.Name = "btnSubmit";
-            this.btnSubmit.Size = new System.Drawing.Size(166, 35);
-            this.btnSubmit.TabIndex = 2;
-            this.btnSubmit.Text = "Login";
-            this.btnSubmit.UseVisualStyleBackColor = true;
-            this.btnSubmit.Click += new System.EventHandler(this.btnSubmit_Click);
-            // 
-            // txtLogin
-            // 
-            this.txtLogin.Location = new System.Drawing.Point(24, 44);
-            this.txtLogin.Name = "txtLogin";
-            this.txtLogin.Size = new System.Drawing.Size(209, 26);
-            this.txtLogin.TabIndex = 0;
-            this.txtLogin.Text = "Username/Email";
-            // 
-            // txtPassword
-            // 
-            this.txtPassword.Location = new System.Drawing.Point(24, 86);
-            this.txtPassword.Name = "txtPassword";
-            this.txtPassword.Size = new System.Drawing.Size(209, 26);
-            this.txtPassword.TabIndex = 1;
-            this.txtPassword.Text = "Password";
-            // 
-            // btnRegister
-            // 
-            this.btnRegister.Location = new System.Drawing.Point(294, 324);
-            this.btnRegister.Name = "btnRegister";
-            this.btnRegister.Size = new System.Drawing.Size(101, 36);
-            this.btnRegister.TabIndex = 15;
-            this.btnRegister.Text = "Register";
-            this.btnRegister.UseVisualStyleBackColor = true;
-            this.btnRegister.Click += new System.EventHandler(this.btnRegister_Click);
-            // 
-            // txtFirstName
-            // 
-            this.txtFirstName.Location = new System.Drawing.Point(15, 35);
-            this.txtFirstName.Name = "txtFirstName";
-            this.txtFirstName.Size = new System.Drawing.Size(412, 26);
-            this.txtFirstName.TabIndex = 4;
-            this.txtFirstName.Text = "First";
-            // 
-            // txtLastName
-            // 
-            this.txtLastName.Location = new System.Drawing.Point(463, 35);
-            this.txtLastName.Name = "txtLastName";
-            this.txtLastName.Size = new System.Drawing.Size(208, 26);
-            this.txtLastName.TabIndex = 5;
-            this.txtLastName.Text = "Last";
-            // 
-            // txtUserName
-            // 
-            this.txtUserName.Location = new System.Drawing.Point(16, 82);
-            this.txtUserName.Name = "txtUserName";
-            this.txtUserName.Size = new System.Drawing.Size(412, 26);
-            this.txtUserName.TabIndex = 6;
-            this.txtUserName.Text = "User";
-            // 
-            // txtEmail
-            // 
-            this.txtEmail.Location = new System.Drawing.Point(463, 82);
-            this.txtEmail.Name = "txtEmail";
-            this.txtEmail.Size = new System.Drawing.Size(208, 26);
-            this.txtEmail.TabIndex = 7;
-            this.txtEmail.Text = "Email";
-            // 
-            // txtPassword2
-            // 
-            this.txtPassword2.Location = new System.Drawing.Point(16, 128);
-            this.txtPassword2.Name = "txtPassword2";
-            this.txtPassword2.Size = new System.Drawing.Size(412, 26);
-            this.txtPassword2.TabIndex = 8;
-            this.txtPassword2.Text = "Password";
-            // 
-            // txtAns1
-            // 
-            this.txtAns1.Location = new System.Drawing.Point(463, 176);
-            this.txtAns1.Name = "txtAns1";
-            this.txtAns1.Size = new System.Drawing.Size(208, 26);
-            this.txtAns1.TabIndex = 10;
-            this.txtAns1.Text = "Ans1";
-            // 
-            // txtAns2
-            // 
-            this.txtAns2.Location = new System.Drawing.Point(463, 218);
-            this.txtAns2.Name = "txtAns2";
-            this.txtAns2.Size = new System.Drawing.Size(208, 26);
-            this.txtAns2.TabIndex = 12;
-            this.txtAns2.Text = "Ans2";
-            // 
-            // txtAns3
-            // 
-            this.txtAns3.Location = new System.Drawing.Point(463, 259);
-            this.txtAns3.Name = "txtAns3";
-            this.txtAns3.Size = new System.Drawing.Size(208, 26);
-            this.txtAns3.TabIndex = 14;
-            this.txtAns3.Text = "Ans3";
-            // 
-            // cmbQuestion1
-            // 
-            this.cmbQuestion1.Cursor = System.Windows.Forms.Cursors.Default;
-            this.cmbQuestion1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbQuestion1.FormattingEnabled = true;
-            this.cmbQuestion1.Location = new System.Drawing.Point(15, 176);
-            this.cmbQuestion1.Name = "cmbQuestion1";
-            this.cmbQuestion1.Size = new System.Drawing.Size(413, 28);
-            this.cmbQuestion1.TabIndex = 9;
-            // 
-            // cmbQuestion2
-            // 
-            this.cmbQuestion2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbQuestion2.FormattingEnabled = true;
-            this.cmbQuestion2.Location = new System.Drawing.Point(16, 218);
-            this.cmbQuestion2.Name = "cmbQuestion2";
-            this.cmbQuestion2.Size = new System.Drawing.Size(413, 28);
-            this.cmbQuestion2.TabIndex = 11;
-            // 
-            // cmbQuestion3
-            // 
-            this.cmbQuestion3.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbQuestion3.FormattingEnabled = true;
-            this.cmbQuestion3.Location = new System.Drawing.Point(16, 259);
-            this.cmbQuestion3.Name = "cmbQuestion3";
-            this.cmbQuestion3.Size = new System.Drawing.Size(413, 28);
-            this.cmbQuestion3.TabIndex = 13;
-            // 
-            // btnForgotPassword
-            // 
-            this.btnForgotPassword.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnForgotPassword.Location = new System.Drawing.Point(46, 189);
-            this.btnForgotPassword.Name = "btnForgotPassword";
-            this.btnForgotPassword.Size = new System.Drawing.Size(166, 35);
-            this.btnForgotPassword.TabIndex = 3;
-            this.btnForgotPassword.Text = "Forgot Password";
-            this.btnForgotPassword.UseVisualStyleBackColor = true;
-            this.btnForgotPassword.Click += new System.EventHandler(this.btnForgotPassword_Click);
-            // 
-            // gbSecurityCheck
-            // 
-            this.gbSecurityCheck.Controls.Add(this.btnCancel);
-            this.gbSecurityCheck.Controls.Add(this.lblQuestionCheck);
-            this.gbSecurityCheck.Controls.Add(this.txtAnswerCheck);
-            this.gbSecurityCheck.Controls.Add(this.btnSend);
-            this.gbSecurityCheck.Location = new System.Drawing.Point(34, 354);
-            this.gbSecurityCheck.Name = "gbSecurityCheck";
-            this.gbSecurityCheck.Size = new System.Drawing.Size(342, 152);
-            this.gbSecurityCheck.TabIndex = 8;
-            this.gbSecurityCheck.TabStop = false;
-            this.gbSecurityCheck.Text = "Forgot Password?";
-            this.gbSecurityCheck.Visible = false;
-            // 
-            // btnCancel
-            // 
-            this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(221, 106);
-            this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(98, 40);
-            this.btnCancel.TabIndex = 18;
-            this.btnCancel.Text = "Cancel";
-            this.btnCancel.UseVisualStyleBackColor = true;
-            // 
-            // lblQuestionCheck
-            // 
-            this.lblQuestionCheck.AutoSize = true;
-            this.lblQuestionCheck.Location = new System.Drawing.Point(15, 41);
-            this.lblQuestionCheck.Name = "lblQuestionCheck";
-            this.lblQuestionCheck.Size = new System.Drawing.Size(0, 20);
-            this.lblQuestionCheck.TabIndex = 2;
-            // 
-            // txtAnswerCheck
-            // 
-            this.txtAnswerCheck.Location = new System.Drawing.Point(19, 64);
-            this.txtAnswerCheck.Name = "txtAnswerCheck";
-            this.txtAnswerCheck.Size = new System.Drawing.Size(300, 26);
-            this.txtAnswerCheck.TabIndex = 16;
-            // 
-            // btnSend
-            // 
-            this.btnSend.Location = new System.Drawing.Point(19, 106);
-            this.btnSend.Name = "btnSend";
-            this.btnSend.Size = new System.Drawing.Size(99, 40);
-            this.btnSend.TabIndex = 17;
-            this.btnSend.Text = "Send";
-            this.btnSend.UseVisualStyleBackColor = true;
-            this.btnSend.Click += new System.EventHandler(this.btnSend_Click);
-            // 
-            // gbRegister
-            // 
-            this.gbRegister.Controls.Add(this.txtFirstName);
-            this.gbRegister.Controls.Add(this.txtLastName);
-            this.gbRegister.Controls.Add(this.txtUserName);
-            this.gbRegister.Controls.Add(this.txtEmail);
-            this.gbRegister.Controls.Add(this.txtPassword2);
-            this.gbRegister.Controls.Add(this.cmbQuestion1);
-            this.gbRegister.Controls.Add(this.txtAns1);
-            this.gbRegister.Controls.Add(this.cmbQuestion2);
-            this.gbRegister.Controls.Add(this.txtAns2);
-            this.gbRegister.Controls.Add(this.cmbQuestion3);
-            this.gbRegister.Controls.Add(this.txtAns3);
-            this.gbRegister.Controls.Add(this.btnRegister);
-            this.gbRegister.Location = new System.Drawing.Point(536, 45);
-            this.gbRegister.Name = "gbRegister";
-            this.gbRegister.Size = new System.Drawing.Size(691, 399);
-            this.gbRegister.TabIndex = 16;
-            this.gbRegister.TabStop = false;
-            this.gbRegister.Text = "Register";
-            // 
-            // gbLoginForgotPassword
-            // 
-            this.gbLoginForgotPassword.AutoSize = true;
-            this.gbLoginForgotPassword.Controls.Add(this.btnNewRegister);
-            this.gbLoginForgotPassword.Controls.Add(this.txtLogin);
-            this.gbLoginForgotPassword.Controls.Add(this.btnSubmit);
-            this.gbLoginForgotPassword.Controls.Add(this.txtPassword);
-            this.gbLoginForgotPassword.Controls.Add(this.btnForgotPassword);
-            this.gbLoginForgotPassword.Location = new System.Drawing.Point(34, 45);
-            this.gbLoginForgotPassword.Name = "gbLoginForgotPassword";
-            this.gbLoginForgotPassword.Size = new System.Drawing.Size(257, 303);
-            this.gbLoginForgotPassword.TabIndex = 17;
-            this.gbLoginForgotPassword.TabStop = false;
-            this.gbLoginForgotPassword.Text = "Login/Forgot Password";
-            // 
-            // btnNewRegister
-            // 
-            this.btnNewRegister.Location = new System.Drawing.Point(46, 239);
-            this.btnNewRegister.Name = "btnNewRegister";
-            this.btnNewRegister.Size = new System.Drawing.Size(166, 35);
-            this.btnNewRegister.TabIndex = 4;
-            this.btnNewRegister.Text = "Register";
-            this.btnNewRegister.UseVisualStyleBackColor = true;
-            this.btnNewRegister.Click += new System.EventHandler(this.btnNewRegister_Click);
             // 
             // menuStrip1
             // 
@@ -359,16 +99,45 @@
             // 
             // gbItems
             // 
+            this.gbItems.Controls.Add(this.btnItemSearch);
+            this.gbItems.Controls.Add(this.txtItemSearch);
+            this.gbItems.Controls.Add(this.label1);
             this.gbItems.Controls.Add(this.txtGroupName);
             this.gbItems.Controls.Add(this.btnAddGroup);
             this.gbItems.Controls.Add(this.dgvItemList);
             this.gbItems.Controls.Add(this.tvGroupList);
-            this.gbItems.Location = new System.Drawing.Point(405, 460);
+            this.gbItems.Location = new System.Drawing.Point(257, 51);
             this.gbItems.Name = "gbItems";
             this.gbItems.Size = new System.Drawing.Size(907, 550);
             this.gbItems.TabIndex = 20;
             this.gbItems.TabStop = false;
             this.gbItems.Text = "Items";
+            // 
+            // btnItemSearch
+            // 
+            this.btnItemSearch.Location = new System.Drawing.Point(699, 38);
+            this.btnItemSearch.Name = "btnItemSearch";
+            this.btnItemSearch.Size = new System.Drawing.Size(123, 27);
+            this.btnItemSearch.TabIndex = 25;
+            this.btnItemSearch.Text = "Search Items";
+            this.btnItemSearch.UseVisualStyleBackColor = true;
+            this.btnItemSearch.Click += new System.EventHandler(this.btnItemSearch_Click);
+            // 
+            // txtItemSearch
+            // 
+            this.txtItemSearch.Location = new System.Drawing.Point(402, 39);
+            this.txtItemSearch.Name = "txtItemSearch";
+            this.txtItemSearch.Size = new System.Drawing.Size(290, 26);
+            this.txtItemSearch.TabIndex = 24;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(221, 42);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(168, 20);
+            this.label1.TabIndex = 23;
+            this.label1.Text = "Search By Item Name:";
             // 
             // txtGroupName
             // 
@@ -433,134 +202,88 @@
             this.ItemWishlist.HeaderText = "Wishlist";
             this.ItemWishlist.Name = "ItemWishlist";
             // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.txtItemValue);
-            this.groupBox1.Controls.Add(this.chkItemWishlist);
-            this.groupBox1.Controls.Add(this.txtItemQuantity);
-            this.groupBox1.Controls.Add(this.txtItemType);
-            this.groupBox1.Controls.Add(this.txtItemName);
-            this.groupBox1.Controls.Add(this.btnItemAddItem);
-            this.groupBox1.Location = new System.Drawing.Point(34, 549);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(365, 423);
-            this.groupBox1.TabIndex = 21;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "groupBox1";
-            // 
             // txtItemValue
             // 
-            this.txtItemValue.Location = new System.Drawing.Point(24, 241);
+            this.txtItemValue.Location = new System.Drawing.Point(26, 291);
             this.txtItemValue.Name = "txtItemValue";
             this.txtItemValue.Size = new System.Drawing.Size(142, 26);
-            this.txtItemValue.TabIndex = 29;
+            this.txtItemValue.TabIndex = 41;
             this.txtItemValue.Text = "Value";
             // 
             // chkItemWishlist
             // 
             this.chkItemWishlist.AutoSize = true;
-            this.chkItemWishlist.Location = new System.Drawing.Point(24, 146);
+            this.chkItemWishlist.Location = new System.Drawing.Point(26, 196);
             this.chkItemWishlist.Name = "chkItemWishlist";
             this.chkItemWishlist.Size = new System.Drawing.Size(98, 24);
-            this.chkItemWishlist.TabIndex = 28;
+            this.chkItemWishlist.TabIndex = 40;
             this.chkItemWishlist.Text = "Wishlist?";
             this.chkItemWishlist.UseVisualStyleBackColor = true;
             // 
             // txtItemQuantity
             // 
-            this.txtItemQuantity.Location = new System.Drawing.Point(24, 191);
+            this.txtItemQuantity.Location = new System.Drawing.Point(26, 241);
             this.txtItemQuantity.Name = "txtItemQuantity";
             this.txtItemQuantity.Size = new System.Drawing.Size(142, 26);
-            this.txtItemQuantity.TabIndex = 27;
+            this.txtItemQuantity.TabIndex = 39;
             this.txtItemQuantity.Text = "Quantity";
             // 
             // txtItemType
             // 
-            this.txtItemType.Location = new System.Drawing.Point(24, 93);
+            this.txtItemType.Location = new System.Drawing.Point(26, 143);
             this.txtItemType.Name = "txtItemType";
             this.txtItemType.Size = new System.Drawing.Size(142, 26);
-            this.txtItemType.TabIndex = 24;
+            this.txtItemType.TabIndex = 38;
             this.txtItemType.Text = "Type";
             // 
             // txtItemName
             // 
-            this.txtItemName.Location = new System.Drawing.Point(24, 43);
+            this.txtItemName.Location = new System.Drawing.Point(26, 93);
             this.txtItemName.Name = "txtItemName";
             this.txtItemName.Size = new System.Drawing.Size(142, 26);
-            this.txtItemName.TabIndex = 23;
+            this.txtItemName.TabIndex = 37;
             this.txtItemName.Text = "Name";
             // 
             // btnItemAddItem
             // 
-            this.btnItemAddItem.Location = new System.Drawing.Point(24, 307);
+            this.btnItemAddItem.Location = new System.Drawing.Point(26, 357);
             this.btnItemAddItem.Name = "btnItemAddItem";
             this.btnItemAddItem.Size = new System.Drawing.Size(108, 36);
-            this.btnItemAddItem.TabIndex = 22;
+            this.btnItemAddItem.TabIndex = 36;
             this.btnItemAddItem.Text = "Add Item";
             this.btnItemAddItem.UseVisualStyleBackColor = true;
-            this.btnItemAddItem.Click += new System.EventHandler(this.btnItemAddItem_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1369, 1047);
-            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.txtItemValue);
+            this.Controls.Add(this.chkItemWishlist);
+            this.Controls.Add(this.txtItemQuantity);
+            this.Controls.Add(this.txtItemType);
+            this.Controls.Add(this.txtItemName);
+            this.Controls.Add(this.btnItemAddItem);
             this.Controls.Add(this.gbItems);
-            this.Controls.Add(this.gbLoginForgotPassword);
-            this.Controls.Add(this.gbRegister);
-            this.Controls.Add(this.gbSecurityCheck);
             this.Controls.Add(this.menuStrip1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.MainMenuStrip = this.menuStrip1;
             this.MaximizeBox = false;
             this.Name = "Form1";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
-            this.gbSecurityCheck.ResumeLayout(false);
-            this.gbSecurityCheck.PerformLayout();
-            this.gbRegister.ResumeLayout(false);
-            this.gbRegister.PerformLayout();
-            this.gbLoginForgotPassword.ResumeLayout(false);
-            this.gbLoginForgotPassword.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.gbItems.ResumeLayout(false);
             this.gbItems.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvItemList)).EndInit();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-
-        private System.Windows.Forms.Button btnSubmit;
-        private System.Windows.Forms.TextBox txtLogin;
-        private System.Windows.Forms.TextBox txtPassword;
-        private System.Windows.Forms.Button btnRegister;
-        private System.Windows.Forms.TextBox txtFirstName;
-        private System.Windows.Forms.TextBox txtLastName;
-        private System.Windows.Forms.TextBox txtUserName;
-        private System.Windows.Forms.TextBox txtEmail;
-        private System.Windows.Forms.TextBox txtPassword2;
-        private System.Windows.Forms.TextBox txtAns1;
-        private System.Windows.Forms.TextBox txtAns2;
-        private System.Windows.Forms.TextBox txtAns3;
-        private System.Windows.Forms.ComboBox cmbQuestion1;
-        private System.Windows.Forms.ComboBox cmbQuestion2;
-        private System.Windows.Forms.ComboBox cmbQuestion3;
-        private System.Windows.Forms.Button btnForgotPassword;
-        private System.Windows.Forms.GroupBox gbSecurityCheck;
-        private System.Windows.Forms.Button btnCancel;
-        private System.Windows.Forms.Label lblQuestionCheck;
-        private System.Windows.Forms.TextBox txtAnswerCheck;
-        private System.Windows.Forms.Button btnSend;
-        private System.Windows.Forms.GroupBox gbRegister;
-        private System.Windows.Forms.GroupBox gbLoginForgotPassword;
-        private System.Windows.Forms.Button btnNewRegister;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem menuToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem logOutToolStripMenuItem;
@@ -570,18 +293,20 @@
         private System.Windows.Forms.DataGridView dgvItemList;
         private System.Windows.Forms.Button btnAddGroup;
         private System.Windows.Forms.TextBox txtGroupName;
-        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ItemName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ItemType;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ItemQuantity;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ItemValue;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn ItemWishlist;
+        private System.Windows.Forms.Button btnItemSearch;
+        private System.Windows.Forms.TextBox txtItemSearch;
+        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txtItemValue;
         private System.Windows.Forms.CheckBox chkItemWishlist;
         private System.Windows.Forms.TextBox txtItemQuantity;
         private System.Windows.Forms.TextBox txtItemType;
         private System.Windows.Forms.TextBox txtItemName;
         private System.Windows.Forms.Button btnItemAddItem;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ItemName;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ItemType;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ItemQuantity;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ItemValue;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn ItemWishlist;
     }
 }
 

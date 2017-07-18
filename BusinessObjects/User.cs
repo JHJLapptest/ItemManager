@@ -20,6 +20,9 @@ namespace BusinessObjects
         private string _UserName;
         private string _Email;
         private string _Password;
+        private string _IPAddress;
+        private string _TrustedIP;
+        private string _UserID;
         private UserQuestionList _Questions = null;
         private ItemGroupList _ItemGroup = null;
         Random rnd = new Random();
@@ -388,21 +391,6 @@ namespace BusinessObjects
                 return this;
             }
             else return null;
-
-
-            /*if (dt != null && dt.Rows.Count == 1)
-            {
-                DataRow dr = dt.Rows[0];
-                base.Initialize(dr);
-                InitializeBusinessData(dr);
-                base.IsNew = false;
-                base.IsDirty = false;
-                return this;
-            }
-            else
-            {
-                return null;
-            }*/
         }
         public User Register(string email, string userName, string firstName, string lastName, string password, 
             Guid questionID1, Guid questionID2, Guid questionID3, 

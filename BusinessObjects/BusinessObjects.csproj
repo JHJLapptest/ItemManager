@@ -55,6 +55,7 @@
     <Compile Include="SecurityQuestions.cs" />
     <Compile Include="SecurityQuestionsList.cs" />
     <Compile Include="User.cs" />
+    <Compile Include="UserIPAddress.cs" />
     <Compile Include="UserQuestion.cs" />
     <Compile Include="UserQuestionList.cs" />
   </ItemGroup>

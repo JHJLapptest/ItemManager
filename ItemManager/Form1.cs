@@ -14,16 +14,9 @@ namespace ItemManager
 {
     public partial class Form1 : Form
     {
-        User user;
-        SecurityQuestionsList Questions1;
-        SecurityQuestionsList Questions2;
-        SecurityQuestionsList Questions3;
-        string CQ1 = string.Empty;
-        string CQ2 = string.Empty;
-        string CQ3 = string.Empty;
-        Guid CQ1G = Guid.Empty;
-        Guid CQ2G = Guid.Empty;
-        Guid CQ3G = Guid.Empty;
+        #region Private Members
+        public static User user;
+        
         Guid LoginToken = Guid.Empty;
         TreeNode tnIGList, tnIGList2, tnIGList3;
         Database DB;
@@ -31,18 +24,24 @@ namespace ItemManager
         ItemList iList;
         ItemList icList = new ItemList();
         ItemList iwList = new ItemList();
+        ItemList isList = new ItemList();
         ItemGroup IG;
         ItemGroupList IGList;
         SecurityQuestionsList SQList;
         ItemGroup temp = new ItemGroup();
         TreeNode selectedNode = new TreeNode();
-        static Form1 F;
+        ForgotPassword FGForm;
+        frmRegister RegForm;
+        frmLogin FL;
+        Form1 F;
+        #endregion
 
         public Form1()
         {
             InitializeComponent();
             this.tvGroupList.NodeMouseClick += TvGroupList_NodeMouseClick;
             dgvItemList.AutoGenerateColumns = false;
+            //F.Size = new Size(344, 426);
         }
 
         private void TvGroupList_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
@@ -100,156 +99,92 @@ namespace ItemManager
             }
         }
 
-        private void btnSubmit_Click(object sender, EventArgs e)
+        public User User
         {
-            user = new User();
-            user = user.Login(txtLogin.Text, txtPassword.Text);
-            if (user != null)
+            set
             {
-                tnIGList = new TreeNode();
-                tnIGList2 = new TreeNode();
-                tnIGList3 = new TreeNode();
-                IGList = new ItemGroupList();
-                IGList.GetByUserID(user.ID);
-                tvGroupList.Nodes.Add(tnIGList);
-                tvGroupList.Nodes.Add(tnIGList2);
-                tnIGList.Text = "Collections";
-                tnIGList.Tag = IGList;
-                tnIGList2.Text = "Wishlist";
-                gbItems.Visible = true;
-                IG = new ItemGroup();
-                ItemGroupList Collections = (ItemGroupList)tnIGList.Tag;
-                
-                foreach (ItemGroup IG in Collections.List)
+                user = value;
+                if (user != null)
                 {
-                    TreeNode tmp = new TreeNode(IG.Name);
-                    if (tmp.Text == IG.Name)
-                    {
-                        tmp.Tag = IG;
+                    tnIGList = new TreeNode();
+                    tnIGList2 = new TreeNode();
+                    tnIGList3 = new TreeNode();
+                    IGList = new ItemGroupList();
+                    IGList.GetByUserID(user.ID);
+                    tvGroupList.Nodes.Add(tnIGList);
+                    tvGroupList.Nodes.Add(tnIGList2);
+                    tnIGList.Text = "Collections";
+                    tnIGList.Tag = IGList;
+                    tnIGList2.Text = "Wishlist";
+                    gbItems.Visible = true;
+                    IG = new ItemGroup();
+                    ItemGroupList Collections = (ItemGroupList)tnIGList.Tag;
 
-                        tnIGList.Nodes.Add(tmp.Text);
-                        tnIGList2.Nodes.Add(tmp.Text);
+                    foreach (ItemGroup IG in Collections.List)
+                    {
+                        TreeNode tmp = new TreeNode(IG.Name);
+                        if (tmp.Text == IG.Name)
+                        {
+                            tmp.Tag = IG;
+
+                            tnIGList.Nodes.Add(tmp.Text);
+                            tnIGList2.Nodes.Add(tmp.Text);
+                        }
                     }
                 }
-            }
-            if (user == null)
-            {
-                MessageBox.Show("Invalid login. Check your credentials and try again.", "Login Error!", MessageBoxButtons.OK);
-            }
+            }   
         }
-
-        private void btnRegister_Click(object sender, EventArgs e)
-        {
-            if (CQ1G != CQ2G || CQ1G != CQ3G || CQ2G != CQ3G)
-            {
-                user = user.Register(txtEmail.Text, txtUserName.Text, txtFirstName.Text, txtLastName.Text, txtPassword2.Text,
-                CQ1G, CQ2G, CQ3G, txtAns1.Text, txtAns2.Text, txtAns3.Text);
-            }
-            if (CQ1G == CQ2G || CQ1G == CQ3G || CQ2G == CQ3G)
-            {
-                MessageBox.Show("Please ensure all security questions are different.", "Error!", MessageBoxButtons.OK);
-            }
-        }
+                
         private void Form1_Load(object sender, EventArgs e)
         {
+            this.Hide();
+            this.ShowInTaskbar = false;
 
-            gbLoginForgotPassword.Visible = true;
-            gbRegister.Visible = false;
-            gbSecurityCheck.Visible = false;
-            gbItems.Visible = false;
+            frmLogin FL = new frmLogin(this);
+            FL.Show();
+            FL.Activate();
         }
-        private void btnForgotPassword_Click(object sender, EventArgs e)
-        {
-            user = new User();
-            user = user.ForgotPassword(txtLogin.Text, txtLogin.Text);
-            if (user != null)
-            {
-                this.gbSecurityCheck.Visible = true;
-                this.lblQuestionCheck.Text = user.Questions.List[0].QuestionText;
-            }
-        }
-        private void btnNewRegister_Click(object sender, EventArgs e)
-        {
-            gbLoginForgotPassword.Visible = false;
-            gbRegister.Visible = true;
-            gbSecurityCheck.Visible = false;
 
-            Questions1 = new SecurityQuestionsList();
-            Questions2 = new SecurityQuestionsList();
-            Questions3 = new SecurityQuestionsList();
-
-            Questions1 = Questions1.GetAll();
-
-            cmbQuestion1.ValueMember = "ID";
-            cmbQuestion1.DisplayMember = "Question";
-            cmbQuestion1.DataSource = Questions1.List;
-
-            CQ1 = cmbQuestion1.SelectedValue.ToString();
-            CQ1G = Guid.Parse(CQ1);
-            cmbQuestion1.SelectedIndexChanged += CmbQuestion1_SelectedIndexChanged;
-
-            Questions2 = Questions2.GetAll();
-            cmbQuestion2.ValueMember = "ID";
-            cmbQuestion2.DisplayMember = "Question";
-            cmbQuestion2.DataSource = Questions2.List;
-
-            CQ2 = cmbQuestion2.SelectedValue.ToString();
-            CQ2G = Guid.Parse(CQ2);
-            cmbQuestion2.SelectedIndexChanged += CmbQuestion2_SelectedIndexChanged;
-
-            Questions3 = Questions3.GetAll();
-            cmbQuestion3.ValueMember = "ID";
-            cmbQuestion3.DisplayMember = "Question";
-            cmbQuestion3.DataSource = Questions3.List;
-
-            CQ3 = cmbQuestion3.SelectedValue.ToString();
-            CQ3G = Guid.Parse(CQ3);
-            cmbQuestion3.SelectedIndexChanged += CmbQuestion3_SelectedIndexChanged;
-        }
-        private void btnSend_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                if (txtAnswerCheck.Text.ToUpper() == user.Questions.List[0].Answer.ToUpper())
-                {
-                    user.SendEmailNowForgotPassword();
-                    MessageBox.Show("If the answer is correct, an email has been sent to the email address on record.", "Notice", MessageBoxButtons.OK);
-                    txtAnswerCheck.Clear();
-                    this.gbSecurityCheck.Visible = false;
-                }
-                else
-                {
-                    MessageBox.Show("If the answer is correct, an email has been sent to the email address on record.", "Notice", MessageBoxButtons.OK);
-                    txtAnswerCheck.Clear();
-                    this.gbSecurityCheck.Visible = false;
-                }
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
-        }
-        private void CmbQuestion1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            cmbQuestion1.DataSource = Questions1.List;
-            CQ1 = cmbQuestion1.SelectedValue.ToString();
-            CQ1G = Guid.Parse(CQ1);
-        }
-        private void CmbQuestion2_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            cmbQuestion1.DataSource = Questions2.List;
-            CQ2 = cmbQuestion2.SelectedValue.ToString();
-            CQ2G = Guid.Parse(CQ2);
-        }
-        private void CmbQuestion3_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            cmbQuestion1.DataSource = Questions3.List;
-            CQ3 = cmbQuestion3.SelectedValue.ToString();
-            CQ3G = Guid.Parse(CQ3);
-        }
         private void logOutToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Application.Restart();
+        }
+
+        private void btnItemSearch_Click(object sender, EventArgs e)
+        {
+
+            //iList.SearchByItemName(temp.ID, txtItemSearch.Text);
+            isList.List.Clear();
+            if (temp.Name == selectedNode.Text && selectedNode.Parent.Text == "Collections")
+            {
+                foreach (Item it in icList.List)
+                {
+                    if (it.WishListStatus == false && (it.Name.Contains(txtItemSearch.Text)))
+                    {
+                        isList.List.Add(it);
+                    }
+                    else
+                    {
+                        //Do Nothing
+                    }
+                }
+                dgvItemList.DataSource = isList.List;
+            }
+            else if (temp.Name == selectedNode.Text && selectedNode.Parent.Text == "Wishlist")
+            {
+                foreach (Item it in iwList.List)
+                {
+                    if (it.WishListStatus == true && (it.Name.Contains(txtItemSearch.Text)))
+                    {
+                        isList.List.Add(it);
+                    }
+                    else
+                    {
+                        //Do Nothing
+                    }
+                }
+                dgvItemList.DataSource = isList.List;
+            }
         }
 
         private void btnItemAddItem_Click(object sender, EventArgs e)
@@ -275,13 +210,13 @@ namespace ItemManager
                     if (it.WishListStatus == false)
                     {
                         icList.List.Add(it);
-                        dgvItemList.DataSource = icList.List;
                     }
                     else
                     {
                         //Do Nothing
                     }
                 }
+                dgvItemList.DataSource = icList.List;
             }
             else if (IG.Name == selectedNode.Text && selectedNode.Parent.Text == "Wishlist")
             {
@@ -291,13 +226,13 @@ namespace ItemManager
                     if (it.WishListStatus == true)
                     {
                         iwList.List.Add(it);
-                        dgvItemList.DataSource = iwList.List;
                     }
                     else
                     {
                         //Do Nothing
                     }
                 }
+                dgvItemList.DataSource = iwList.List;
             }
             #region Empty Text Boxes
             txtItemName.Text = string.Empty;
