@@ -92,8 +92,10 @@
             this.Controls.Add(this.btnSubmit);
             this.Controls.Add(this.txtPassword);
             this.Controls.Add(this.btnForgotPassword);
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "frmLogin";
-            this.Text = "frmLogin";
+            this.Text = "Log In";
             this.ResumeLayout(false);
             this.PerformLayout();
 

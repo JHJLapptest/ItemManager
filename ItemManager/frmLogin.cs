@@ -19,7 +19,10 @@ namespace ItemManager
         frmRegister RegForm;
         ForgotPassword FGForm;
         UserIPAddress userIP;
+        frmAuthorize FA;
         string a4;
+        public static string pubIP;
+        //public static string pin;
 
         public frmLogin()
         {
@@ -35,13 +38,23 @@ namespace ItemManager
             if (user != null && txtPassword.Text == user.Password)
             {
                 F.User = user;
-                F.Show();
-                F.Activate();
                 GetPublicIP();
-                string pubIP = a4;
-                if (pubIP == userIP.IPAddress && userIP.TrustedIP == true)
+                pubIP = a4;
+                if (userIP.TrustedIP == true)
                 {
+                    F.Show();
+                    F.Activate();
                     this.Close();
+                }
+                else if (userIP.TrustedIP == false)
+                {
+                    F.ShowInTaskbar = true;
+                    F.Show();
+                    F.Activate();
+                    this.Close();
+                    //FA = new frmAuthorize();
+                    //userIP.ConfirmIP();
+                    //FA.ShowDialog();
                 }
 
             }
@@ -74,17 +87,24 @@ namespace ItemManager
             RegForm.Activate();
 
         }
-        public static string GetPublicIP()
+        public string GetPublicIP()
         {
-            string url = "http://checkip.dyndns.org";
-            System.Net.WebRequest req = System.Net.WebRequest.Create(url);
-            System.Net.WebResponse resp = req.GetResponse();
-            System.IO.StreamReader sr = new System.IO.StreamReader(resp.GetResponseStream());
-            string response = sr.ReadToEnd().Trim();
-            string[] a = response.Split(':');
-            string a2 = a[1].Substring(1);
-            string[] a3 = a2.Split('<');
-            string a4 = a3[0];
+            try
+            {
+                string url = "http://checkip.dyndns.org";
+                System.Net.WebRequest req = System.Net.WebRequest.Create(url);
+                System.Net.WebResponse resp = req.GetResponse();
+                System.IO.StreamReader sr = new System.IO.StreamReader(resp.GetResponseStream());
+                string response = sr.ReadToEnd().Trim();
+                string[] a = response.Split(':');
+                string a2 = a[1].Substring(1);
+                string[] a3 = a2.Split('<');
+                this.a4 = a3[0];
+            }
+            catch
+            {
+                MessageBox.Show("Connection status: Offline", "Error!");
+            }
             return a4;
         }
         public frmLogin(Form1 frm)

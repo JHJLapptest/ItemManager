@@ -5,7 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data;
 using System.Data.SqlClient;
+using BusinessObjects;
 using DatabaseHelper;
+using EmailHelper;
 
 namespace BusinessObjects
 {
@@ -15,7 +17,10 @@ namespace BusinessObjects
         private string _IPAddress;
         private bool _TrustedIP;
         private Guid _UserID;
+        public static string pin;
+        private string _Email;
         private BrokenRuleList _BrokenRules = new BrokenRuleList();
+        
         #endregion
         #region Public Properties
         public string IPAddress
@@ -51,6 +56,7 @@ namespace BusinessObjects
                 return _UserID;
             }
         }
+        
 
         public BrokenRuleList BrokenRules
         {
@@ -61,7 +67,13 @@ namespace BusinessObjects
         }
         #endregion
 
-
+        public int GenerateRandomNo()
+        {
+            int _min = 1000;
+            int _max = 9999;
+            Random _rng = new Random();
+            return _rng.Next(_min, _max);
+        }
 
         public bool Insert(Database database)
         {
@@ -87,7 +99,7 @@ namespace BusinessObjects
             }
             return result;
         }
-        private bool Update(Database database)
+        public bool Update(Database database)
         {
             bool result = true;
             try
@@ -109,7 +121,7 @@ namespace BusinessObjects
             }
             return result;
         }
-        private bool Delete(Database database)
+        public bool Delete(Database database)
         {
             bool result = true;
             try
@@ -128,6 +140,19 @@ namespace BusinessObjects
                 throw;
             }
             return result;
+        }
+        public void ConfirmIP()
+        {
+            EmailConfig emailConfig = new EmailConfig();
+            emailConfig = emailConfig.GetByName("gmail");
+            SendEmail se = new SendEmail();
+            se.Email = emailConfig.Email;
+            se.Password = emailConfig.Password;
+            se.Host = emailConfig.Host;
+            se.Port = emailConfig.Port;
+            pin = GenerateRandomNo().ToString();
+            string body = string.Format("Here is your code to authorize this IP address ("+ ") as a Trusted IP /n" + pin);
+            //se.Send("JHJLapptest@gmail.com", _Email, "Authorize this IP", body);
         }
 
         public UserIPAddress()

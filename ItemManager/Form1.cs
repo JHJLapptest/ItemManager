@@ -22,13 +22,13 @@ namespace ItemManager
         Database DB;
         Item item;
         ItemList iList;
-        ItemList icList = new ItemList();
-        ItemList iwList = new ItemList();
-        ItemList isList = new ItemList();
+        ItemList icList;
+        ItemList iwList;
+        ItemList isList;
         ItemGroup IG;
         ItemGroupList IGList;
         SecurityQuestionsList SQList;
-        ItemGroup temp = new ItemGroup();
+        public static ItemGroup temp;
         TreeNode selectedNode = new TreeNode();
         ForgotPassword FGForm;
         frmRegister RegForm;
@@ -49,6 +49,8 @@ namespace ItemManager
             IG = new ItemGroup();
             IGList = new ItemGroupList();
             iList = new ItemList();
+            ItemList icList = new ItemList();
+            ItemList iwList = new ItemList();
             IGList.GetByUserID(user.ID);
             var hit = tvGroupList.HitTest(e.Location);
             if (hit.Location == TreeViewHitTestLocations.Label)
@@ -187,60 +189,63 @@ namespace ItemManager
             }
         }
 
-        private void btnItemAddItem_Click(object sender, EventArgs e)
+        private void btnItemAddItem_Click_1(object sender, EventArgs e)
         {
-            item = new Item();
-            IG = temp;
-            
-            item.Name = txtItemName.Text;
-            item.Type = txtItemType.Text;
-            item.WishListStatus = chkItemWishlist.Checked;
-            item.Quantity = int.Parse(txtItemQuantity.Text);
-            item.Value = decimal.Parse(txtItemValue.Text);
-            
-            IG.ItemList.List.Add(item);
-            user.ItemGroups.List.Add(IG);
-            user.Save();
-
-            if (IG.Name == selectedNode.Text && selectedNode.Parent.Text == "Collections")
+            if (temp.UserID == user.ID && selectedNode.Text != "Collections" && selectedNode.Text != "Wishlist")
             {
-                icList.List.Clear();
-                foreach (Item it in IG.ItemList.List)
+                //this.ShowInTaskbar = true;
+                //this.Show();
+                frmAddItem IF = new frmAddItem(this, IG);
+                IF.FormClosing += IF_FormClosing;
+                this.ShowInTaskbar = true;
+                this.Show();
+                IF.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("Please select a group that you would like to add an item to.", "Error!", MessageBoxButtons.OK);
+            }
+        }
+
+        private void IF_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            IG = temp;
+            icList = new ItemList();
+            iwList = new ItemList();
+            if(selectedNode.Text == "Collections" || selectedNode.Text == "Wishlist")
+            {
+                //Do Nothing
+            }
+            else if (selectedNode.Parent.Text == "Collections")
+            {
+                foreach (Item it in IG.ItemList.List) //pick up here
                 {
                     if (it.WishListStatus == false)
                     {
                         icList.List.Add(it);
+                        dgvItemList.DataSource = icList.List;
                     }
                     else
                     {
                         //Do Nothing
                     }
                 }
-                dgvItemList.DataSource = icList.List;
             }
-            else if (IG.Name == selectedNode.Text && selectedNode.Parent.Text == "Wishlist")
+            else if (selectedNode.Parent.Text == "Wishlist")
             {
-                iwList.List.Clear();
                 foreach (Item it in IG.ItemList.List)
                 {
                     if (it.WishListStatus == true)
                     {
                         iwList.List.Add(it);
+                        dgvItemList.DataSource = iwList.List;
                     }
                     else
                     {
                         //Do Nothing
                     }
                 }
-                dgvItemList.DataSource = iwList.List;
             }
-            #region Empty Text Boxes
-            txtItemName.Text = string.Empty;
-            txtItemType.Text = string.Empty;
-            txtItemQuantity.Text = string.Empty;
-            txtItemValue.Text = string.Empty;
-            chkItemWishlist.Checked = false;
-            #endregion
         }
 
         private void btnAddGroup_Click(object sender, EventArgs e)
