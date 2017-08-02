@@ -36,12 +36,61 @@ namespace ItemManager
         Form1 F;
         #endregion
 
+        public User User
+        {
+            set
+            {
+                user = value;
+                if (user != null)
+                {
+                    tnIGList = new TreeNode();
+                    tnIGList2 = new TreeNode();
+                    tnIGList3 = new TreeNode();
+                    IGList = new ItemGroupList();
+                    IGList.GetByUserID(user.ID);
+                    tvGroupList.Nodes.Add(tnIGList);
+                    tvGroupList.Nodes.Add(tnIGList2);
+                    tnIGList.Text = "Collections";
+                    tnIGList.Tag = IGList;
+                    tnIGList2.Text = "Wishlist";
+                    Show();
+                    Activate();
+                    ShowInTaskbar = true;
+                    IG = new ItemGroup();
+                    ItemGroupList Collections = user.ItemGroups;
+
+                    foreach (ItemGroup IG in Collections.List)
+                    {
+                        TreeNode tmp = new TreeNode(IG.Name);
+                        if (tmp.Text == IG.Name)
+                        {
+                            tmp.Tag = IG;
+
+                            tnIGList.Nodes.Add(tmp.Text);
+                            tnIGList2.Nodes.Add(tmp.Text);
+                        }
+                    }
+                }
+            }
+        }
+
         public Form1()
         {
             InitializeComponent();
             this.tvGroupList.NodeMouseClick += TvGroupList_NodeMouseClick;
             dgvItemList.AutoGenerateColumns = false;
+            dgvItemList.CellMouseUp += DgvItemList_CellMouseUp;
+            dgvItemList.CellEndEdit += DgvItemList_CellEndEdit;
             //F.Size = new Size(344, 426);
+        }
+
+        private void DgvItemList_CellMouseUp(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if(e.Button == MouseButtons.Right)
+            {
+                cmsMenu.Show(Cursor.Position);
+
+            }
         }
 
         private void TvGroupList_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
@@ -99,43 +148,7 @@ namespace ItemManager
             {
                 //Do Nothing.
             }
-        }
-
-        public User User
-        {
-            set
-            {
-                user = value;
-                if (user != null)
-                {
-                    tnIGList = new TreeNode();
-                    tnIGList2 = new TreeNode();
-                    tnIGList3 = new TreeNode();
-                    IGList = new ItemGroupList();
-                    IGList.GetByUserID(user.ID);
-                    tvGroupList.Nodes.Add(tnIGList);
-                    tvGroupList.Nodes.Add(tnIGList2);
-                    tnIGList.Text = "Collections";
-                    tnIGList.Tag = IGList;
-                    tnIGList2.Text = "Wishlist";
-                    gbItems.Visible = true;
-                    IG = new ItemGroup();
-                    ItemGroupList Collections = (ItemGroupList)tnIGList.Tag;
-
-                    foreach (ItemGroup IG in Collections.List)
-                    {
-                        TreeNode tmp = new TreeNode(IG.Name);
-                        if (tmp.Text == IG.Name)
-                        {
-                            tmp.Tag = IG;
-
-                            tnIGList.Nodes.Add(tmp.Text);
-                            tnIGList2.Nodes.Add(tmp.Text);
-                        }
-                    }
-                }
-            }   
-        }
+        }        
                 
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -204,6 +217,37 @@ namespace ItemManager
             else
             {
                 MessageBox.Show("Please select a group that you would like to add an item to.", "Error!", MessageBoxButtons.OK);
+            }
+        }
+
+        private void cmsEdit_Click(object sender, EventArgs e)
+        {
+            dgvItemList.ReadOnly = false;
+            dgvItemList.BeginEdit(true);
+        }
+        private void DgvItemList_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            dgvItemList.ReadOnly = true;
+        }
+
+        private void btnSaveChanges_Click(object sender, EventArgs e)
+        {
+            IG = temp;
+            user.ItemGroups.List.Add(IG);
+            user.Save();
+        }
+
+        private void btnSearchAll_Click(object sender, EventArgs e)
+        {
+            isList = new ItemList();
+            isList.List.Clear();
+            i
+            foreach (Item it in iList.List)
+            {
+                if (it.Name.Contains(txtItemSearch.Text))
+                {
+                    isList.List.Add(it);
+                }
             }
         }
 

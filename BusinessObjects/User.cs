@@ -21,7 +21,7 @@ namespace BusinessObjects
         private string _Email;
         private string _Password;
         private string _IPAddress;
-        private string _TrustedIP;
+        private bool _TrustedIP;
         private string _UserID;
         private UserQuestionList _Questions = null;
         private ItemGroupList _ItemGroup = null;
@@ -285,7 +285,6 @@ namespace BusinessObjects
             {
                 result = _Questions.Save(database, base.ID);
             }
-
             if (result == true)
             {
                 database.EndTransaction();

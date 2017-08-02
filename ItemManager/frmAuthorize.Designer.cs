@@ -32,29 +32,35 @@
             this.txtPin = new System.Windows.Forms.TextBox();
             this.btnSubmit = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.btnResend = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // lblAuthorizeMsg
             // 
             this.lblAuthorizeMsg.AutoSize = true;
-            this.lblAuthorizeMsg.Location = new System.Drawing.Point(12, 34);
+            this.lblAuthorizeMsg.Location = new System.Drawing.Point(17, 44);
+            this.lblAuthorizeMsg.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblAuthorizeMsg.Name = "lblAuthorizeMsg";
-            this.lblAuthorizeMsg.Size = new System.Drawing.Size(0, 20);
+            this.lblAuthorizeMsg.Size = new System.Drawing.Size(0, 26);
             this.lblAuthorizeMsg.TabIndex = 0;
             this.lblAuthorizeMsg.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // txtPin
             // 
-            this.txtPin.Location = new System.Drawing.Point(124, 172);
+            this.txtPin.Location = new System.Drawing.Point(230, 145);
+            this.txtPin.Margin = new System.Windows.Forms.Padding(4);
             this.txtPin.Name = "txtPin";
-            this.txtPin.Size = new System.Drawing.Size(104, 26);
+            this.txtPin.Size = new System.Drawing.Size(148, 32);
             this.txtPin.TabIndex = 1;
             // 
             // btnSubmit
             // 
-            this.btnSubmit.Location = new System.Drawing.Point(54, 226);
+            this.btnSubmit.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSubmit.Location = new System.Drawing.Point(104, 216);
+            this.btnSubmit.Margin = new System.Windows.Forms.Padding(4);
             this.btnSubmit.Name = "btnSubmit";
-            this.btnSubmit.Size = new System.Drawing.Size(87, 35);
+            this.btnSubmit.Size = new System.Drawing.Size(126, 45);
             this.btnSubmit.TabIndex = 2;
             this.btnSubmit.Text = "Submit";
             this.btnSubmit.UseVisualStyleBackColor = true;
@@ -62,25 +68,57 @@
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(211, 226);
+            this.btnCancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCancel.Location = new System.Drawing.Point(380, 216);
+            this.btnCancel.Margin = new System.Windows.Forms.Padding(4);
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(87, 35);
+            this.btnCancel.Size = new System.Drawing.Size(126, 45);
             this.btnCancel.TabIndex = 3;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.BackColor = System.Drawing.SystemColors.Control;
+            this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(0, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(612, 75);
+            this.label1.TabIndex = 4;
+            this.label1.Text = "You\'re signing in from a new or different IP address.\r\nTo verify that this is you" +
+    ",\r\nplease enter the authorization pin that was sent to your email address.";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
+            // btnResend
+            // 
+            this.btnResend.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnResend.Location = new System.Drawing.Point(242, 216);
+            this.btnResend.Name = "btnResend";
+            this.btnResend.Size = new System.Drawing.Size(126, 45);
+            this.btnResend.TabIndex = 5;
+            this.btnResend.Text = "Resend PIN";
+            this.btnResend.UseVisualStyleBackColor = true;
+            this.btnResend.Click += new System.EventHandler(this.btnResend_Click);
+            // 
             // frmAuthorize
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(13F, 26F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(353, 304);
+            this.ClientSize = new System.Drawing.Size(612, 329);
+            this.ControlBox = false;
+            this.Controls.Add(this.btnResend);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnSubmit);
             this.Controls.Add(this.txtPin);
             this.Controls.Add(this.lblAuthorizeMsg);
+            this.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "frmAuthorize";
-            this.Text = "frmAuthorize";
+            this.Text = "Is this you?";
             this.Load += new System.EventHandler(this.frmAuthorize_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -93,5 +131,7 @@
         private System.Windows.Forms.TextBox txtPin;
         private System.Windows.Forms.Button btnSubmit;
         private System.Windows.Forms.Button btnCancel;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button btnResend;
     }
 }

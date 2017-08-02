@@ -22,11 +22,18 @@ namespace ItemManager
         frmAuthorize FA;
         string a4;
         public static string pubIP;
+        bool result;
         //public static string pin;
 
         public frmLogin()
         {
             InitializeComponent();
+            this.FormClosing += FrmLogin_FormClosing;
+        }
+
+        private void FrmLogin_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Application.Exit();
         }
 
         private void btnSubmit_Click(object sender, EventArgs e)
@@ -34,29 +41,37 @@ namespace ItemManager
             user = new User();
             userIP = new UserIPAddress();
             user = user.Login(txtLogin.Text.ToUpper(), txtPassword.Text);
+            userIP.GetPublicIP();//use to pass values
+            pubIP = userIP.IPAddress;
+            userIP.UserID = user.ID;
+            userIP = userIP.SearchIP();
 
-            if (user != null && txtPassword.Text == user.Password)
+            if (userIP.IPAddress == string.Empty || userIP.IPAddress == null)
             {
-                F.User = user;
-                GetPublicIP();
-                pubIP = a4;
+                MessageBox.Show("No internet access. Please check your connection settings and try again.", "Login Error!", MessageBoxButtons.OK);
+                this.Activate();
+            }
+            else if (user != null && txtPassword.Text == user.Password)
+            { 
+
+            //if userip = null, create if statement to run frmAuthorize 7/26
+
                 if (userIP.TrustedIP == true)
                 {
-                    F.Show();
-                    F.Activate();
-                    this.Close();
+                    this.Hide();
+                    ShowInTaskbar = false;
+                    F.User = user;
                 }
                 else if (userIP.TrustedIP == false)
                 {
-                    F.ShowInTaskbar = true;
-                    F.Show();
-                    F.Activate();
-                    this.Close();
-                    //FA = new frmAuthorize();
-                    //userIP.ConfirmIP();
-                    //FA.ShowDialog();
+                    this.Hide();
+                    FA = new frmAuthorize();
+                    userIP.ConfirmIP(user.Email);
+                    FA.ShowDialog();
                 }
-
+                //F.ShowInTaskbar = true;
+                //F.Show();
+                //F.Activate();
             }
             else if (user == null || (user != null && txtPassword.Text != user.Password))
             {
@@ -87,30 +102,13 @@ namespace ItemManager
             RegForm.Activate();
 
         }
-        public string GetPublicIP()
-        {
-            try
-            {
-                string url = "http://checkip.dyndns.org";
-                System.Net.WebRequest req = System.Net.WebRequest.Create(url);
-                System.Net.WebResponse resp = req.GetResponse();
-                System.IO.StreamReader sr = new System.IO.StreamReader(resp.GetResponseStream());
-                string response = sr.ReadToEnd().Trim();
-                string[] a = response.Split(':');
-                string a2 = a[1].Substring(1);
-                string[] a3 = a2.Split('<');
-                this.a4 = a3[0];
-            }
-            catch
-            {
-                MessageBox.Show("Connection status: Offline", "Error!");
-            }
-            return a4;
-        }
         public frmLogin(Form1 frm)
         {
             InitializeComponent();
             F = frm;
+            F.Hide();
+            F.Visible = false;
+            this.FormClosing += FrmLogin_FormClosing;
         }
     }
 }
