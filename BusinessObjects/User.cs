@@ -336,60 +336,60 @@ namespace BusinessObjects
         }
         public User Login(string login, string password)
         {
-            //string username = string.Empty;
-            //string email = string.Empty;
-            Database database = new Database("ItemManager"); 
-            DataTable dt = new DataTable();
-            
-            #region My Stuff
-            /*
-            if ((database.Command.CommandText = ("Select * FROM tblUser Where Username = " + login)) != null)
+            try
             {
+                //string username = string.Empty;
+                //string email = string.Empty;
+                Database database = new Database("ItemManager");
+                DataTable dt = new DataTable();
+
+                #region My Stuff
+                /*
+                if ((database.Command.CommandText = ("Select * FROM tblUser Where Username = " + login)) != null)
+                {
+                    database.Command.CommandText = "tblUserLogin";
+                    database.Command.Parameters.Add("@Username", SqlDbType.VarChar).Value = login;
+                    database.Command.Parameters.Add("@Password", SqlDbType.VarChar).Value = password;
+                    dt = database.ExecuteQuery();
+                    DataRow dr = dt.Rows[0];
+                    base.Initialize(dr);
+                    InitializeBusinessData(dr);
+                }
+                else if ((database.Command.CommandText = ("Select * FROM tblUser Where Email = " + login)) != null)
+                {
+                    database.Command.CommandText = "tblUserLogin";
+                    database.Command.Parameters.Add("@Email", SqlDbType.VarChar).Value = login;
+                    database.Command.Parameters.Add("@Password", SqlDbType.VarChar).Value = password;
+                    dt = database.ExecuteQuery();
+                    DataRow dr = dt.Rows[0];
+                    base.Initialize(dr);
+                    InitializeBusinessData(dr);
+                }
+                */
+                #endregion
+
+                database.Command.CommandType = CommandType.StoredProcedure;
                 database.Command.CommandText = "tblUserLogin";
-                database.Command.Parameters.Add("@Username", SqlDbType.VarChar).Value = login;
-                database.Command.Parameters.Add("@Password", SqlDbType.VarChar).Value = password;
-                dt = database.ExecuteQuery();
-                DataRow dr = dt.Rows[0];
-                base.Initialize(dr);
-                InitializeBusinessData(dr);
-            }
-            else if ((database.Command.CommandText = ("Select * FROM tblUser Where Email = " + login)) != null)
-            {
-                database.Command.CommandText = "tblUserLogin";
+                database.Command.Parameters.Add("@UserName", SqlDbType.VarChar).Value = login;
                 database.Command.Parameters.Add("@Email", SqlDbType.VarChar).Value = login;
                 database.Command.Parameters.Add("@Password", SqlDbType.VarChar).Value = password;
                 dt = database.ExecuteQuery();
                 DataRow dr = dt.Rows[0];
                 base.Initialize(dr);
                 InitializeBusinessData(dr);
-            }
-            */
-            #endregion
+                if ((login == UserName || login == Email) && dt != null && dt.Rows.Count == 1)
+                {
+                    base.IsNew = false;
+                    base.IsDirty = false;
 
-            database.Command.CommandType = CommandType.StoredProcedure;
-            database.Command.CommandText = "tblUserLogin";
-            database.Command.Parameters.Add("@UserName", SqlDbType.VarChar).Value = login;
-            database.Command.Parameters.Add("@Email", SqlDbType.VarChar).Value = login;
-            database.Command.Parameters.Add("@Password", SqlDbType.VarChar).Value = password;
-            dt = database.ExecuteQuery();
-            DataRow dr = dt.Rows[0];
-            base.Initialize(dr);
-            InitializeBusinessData(dr);
-            if (login == UserName && dt != null && dt.Rows.Count == 1)
-            {
-                base.IsNew = false;
-                base.IsDirty = false;
-
-                return this;
+                    return this;
+                }
+                else return null;
             }
-            else if (login == Email && dt != null && dt.Rows.Count == 1)
+            catch
             {
-                base.IsNew = false;
-                base.IsDirty = false;
-                
-                return this;
+                return null;
             }
-            else return null;
         }
         public User Register(string email, string userName, string firstName, string lastName, string password, 
             Guid questionID1, Guid questionID2, Guid questionID3, 
@@ -499,7 +499,7 @@ namespace BusinessObjects
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Error!", MessageBoxButtons.OK);
-                return this;
+                return null;
             }
         }
         public User ForgotPassword(string email, string username)

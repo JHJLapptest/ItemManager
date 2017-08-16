@@ -35,25 +35,26 @@ namespace ItemManager
                 userIP = new UserIPAddress();
                 userIP.UserID = frmLogin.user.ID;
                 userIP.IPAddress = frmLogin.pubIP;
-                //userIP.IPAddress = UserIPAddress.
+                //userIP.IPAddress = UserIPAddress
                 userIP.TrustedIP = true;
                 userIP.Save();
+                
                 this.Close();
 
-                F = new Form1();
+                //F = new Form1();
                 F.ShowInTaskbar = true;
                 F.Show();
                 F.Activate();
+                F.User = frmLogin.user;
             }
             else if (txtPin.Text != UserIPAddress.pin)
             {
                 userIP = new UserIPAddress();
                 userIP.UserID = frmLogin.user.ID;
                 userIP.IPAddress = frmLogin.pubIP;
-                //userIP.IPAddress = UserIPAddress.
-                userIP.TrustedIP = false;
-                userIP.Save();
-                this.Close();
+                //userIP.TrustedIP = false;
+                //userIP.Save();
+                MessageBox.Show("Incorrect pin number.", "Error!", MessageBoxButtons.OK);
             }
         }
 
@@ -69,6 +70,12 @@ namespace ItemManager
             userIP.UserID = frmLogin.user.ID;
             userIP.IPAddress = frmLogin.pubIP;
             userIP.ConfirmIP(frmLogin.user.Email);
+            MessageBox.Show("Another pin has been sent to the account's email address. If an email has not been received in 5 minutes, click Resend PIN", "Notice!", MessageBoxButtons.OK);
+        }
+        public frmAuthorize(Form1 frm)
+        {
+            InitializeComponent();
+            F = frm;
         }
     }
 }

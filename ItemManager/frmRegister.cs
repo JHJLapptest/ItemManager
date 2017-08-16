@@ -35,11 +35,17 @@ namespace ItemManager
         {
             {
                 user = new User();
+
                 if (CQ1G != CQ2G || CQ1G != CQ3G || CQ2G != CQ3G)
                 {
                     user = user.Register(txtEmail.Text.ToUpper(), txtUserName.Text.ToUpper(), txtFirstName.Text.ToUpper(), txtLastName.Text.ToUpper(), txtPassword2.Text,
                     CQ1G, CQ2G, CQ3G, txtAns1.Text.ToUpper(), txtAns2.Text.ToUpper(), txtAns3.Text.ToUpper());
-                    if (user.BrokenRules.List.Count == 0)
+                    if (user == null)
+                    {
+
+                        //do nothing
+                    }
+                    else if (user.BrokenRules.List.Count == 0)
                     {
                         this.Close();
                     }

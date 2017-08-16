@@ -40,22 +40,28 @@ namespace ItemManager
         {
             user = new User();
             userIP = new UserIPAddress();
-            user = user.Login(txtLogin.Text.ToUpper(), txtPassword.Text);
             userIP.GetPublicIP();//use to pass values
             pubIP = userIP.IPAddress;
-            userIP.UserID = user.ID;
-            userIP = userIP.SearchIP();
-
+            user = user.Login(txtLogin.Text.ToUpper(), txtPassword.Text);
             if (userIP.IPAddress == string.Empty || userIP.IPAddress == null)
             {
                 MessageBox.Show("No internet access. Please check your connection settings and try again.", "Login Error!", MessageBoxButtons.OK);
                 this.Activate();
             }
+            
+            
+
+            else if (user == null || (user != null && txtPassword.Text != user.Password))
+            {
+                MessageBox.Show("Invalid login. Check your credentials and try again.", "Login Error!", MessageBoxButtons.OK);
+            }
+            
             else if (user != null && txtPassword.Text == user.Password)
-            { 
+            {
 
-            //if userip = null, create if statement to run frmAuthorize 7/26
-
+                //if userip = null, create if statement to run frmAuthorize 7/26
+                userIP.UserID = user.ID;
+                userIP = userIP.SearchIP();
                 if (userIP.TrustedIP == true)
                 {
                     this.Hide();
@@ -65,25 +71,31 @@ namespace ItemManager
                 else if (userIP.TrustedIP == false)
                 {
                     this.Hide();
-                    FA = new frmAuthorize();
+                    FA = new frmAuthorize(F);
                     userIP.ConfirmIP(user.Email);
-                    FA.ShowDialog();
+                    FA.Show();
+                    FA.Activate();
                 }
                 //F.ShowInTaskbar = true;
                 //F.Show();
                 //F.Activate();
             }
-            else if (user == null || (user != null && txtPassword.Text != user.Password))
-            {
-                MessageBox.Show("Invalid login. Check your credentials and try again.", "Login Error!", MessageBoxButtons.OK);
-            }
+            
         }
         private void btnForgotPassword_Click(object sender, EventArgs e)
         {
             user = new User();
             user = user.ForgotPassword(txtLogin.Text, txtLogin.Text);
             FGForm = new ForgotPassword();
-            if (user != null)
+            userIP = new UserIPAddress();
+            userIP.GetPublicIP();//use to pass values
+            pubIP = userIP.IPAddress;
+            if (userIP.IPAddress == string.Empty || userIP.IPAddress == null)
+            {
+                MessageBox.Show("No internet access. Please check your connection settings and try again.", "Login Error!", MessageBoxButtons.OK);
+                this.Activate();
+            }
+            else if (user != null)
             {
                 FGForm.ShowDialog();
                 //FGForm.Activate();
@@ -96,11 +108,22 @@ namespace ItemManager
         }
         private void btnNewRegister_Click(object sender, EventArgs e)
         {
-            RegForm = new frmRegister();
-            RegForm.ShowDialog();
-            //this.Hide();
-            RegForm.Activate();
-
+            userIP = new UserIPAddress();
+            userIP.GetPublicIP();//use to pass values
+            pubIP = userIP.IPAddress;
+            //userIP.UserID = user.ID;
+            if (userIP.IPAddress == string.Empty || userIP.IPAddress == null)
+            {
+                MessageBox.Show("No internet access. Please check your connection settings and try again.", "Login Error!", MessageBoxButtons.OK);
+                this.Activate();
+            }
+            else
+            {
+                RegForm = new frmRegister();
+                RegForm.ShowDialog();
+                //this.Hide();
+                //RegForm.Activate();
+            }
         }
         public frmLogin(Form1 frm)
         {

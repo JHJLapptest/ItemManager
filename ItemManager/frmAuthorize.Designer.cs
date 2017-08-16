@@ -48,7 +48,7 @@
             // 
             // txtPin
             // 
-            this.txtPin.Location = new System.Drawing.Point(230, 145);
+            this.txtPin.Location = new System.Drawing.Point(159, 145);
             this.txtPin.Margin = new System.Windows.Forms.Padding(4);
             this.txtPin.Name = "txtPin";
             this.txtPin.Size = new System.Drawing.Size(148, 32);
@@ -57,7 +57,7 @@
             // btnSubmit
             // 
             this.btnSubmit.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSubmit.Location = new System.Drawing.Point(104, 216);
+            this.btnSubmit.Location = new System.Drawing.Point(33, 216);
             this.btnSubmit.Margin = new System.Windows.Forms.Padding(4);
             this.btnSubmit.Name = "btnSubmit";
             this.btnSubmit.Size = new System.Drawing.Size(126, 45);
@@ -68,8 +68,9 @@
             // 
             // btnCancel
             // 
+            this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnCancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCancel.Location = new System.Drawing.Point(380, 216);
+            this.btnCancel.Location = new System.Drawing.Point(309, 216);
             this.btnCancel.Margin = new System.Windows.Forms.Padding(4);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(126, 45);
@@ -95,7 +96,7 @@
             // btnResend
             // 
             this.btnResend.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnResend.Location = new System.Drawing.Point(242, 216);
+            this.btnResend.Location = new System.Drawing.Point(171, 216);
             this.btnResend.Name = "btnResend";
             this.btnResend.Size = new System.Drawing.Size(126, 45);
             this.btnResend.TabIndex = 5;
@@ -107,7 +108,8 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(13F, 26F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(612, 329);
+            this.CancelButton = this.btnCancel;
+            this.ClientSize = new System.Drawing.Size(467, 329);
             this.ControlBox = false;
             this.Controls.Add(this.btnResend);
             this.Controls.Add(this.label1);
@@ -116,8 +118,11 @@
             this.Controls.Add(this.txtPin);
             this.Controls.Add(this.lblAuthorizeMsg);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "frmAuthorize";
+            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Is this you?";
             this.Load += new System.EventHandler(this.frmAuthorize_Load);
             this.ResumeLayout(false);

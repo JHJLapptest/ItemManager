@@ -121,7 +121,7 @@
             this.Controls.Add(this.btnItemAddItem);
             this.Name = "frmAddItem";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Add an Item";
+            this.Load += new System.EventHandler(this.frmAddItem_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

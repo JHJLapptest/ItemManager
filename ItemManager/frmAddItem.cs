@@ -32,64 +32,79 @@ namespace ItemManager
 
         private void btnItemAddItem_Click(object sender, EventArgs e)
         {
-            user = Form1.user;
-            item = new Item();
-            IG = Form1.temp;
-            icList = new ItemList();
-            iwList = new ItemList();
+            try
+            {
+                user = Form1.user;
+                item = new Item();
+                IG = Form1.temp;
+                icList = new ItemList();
+                iwList = new ItemList();
 
-            item.Name = txtItemName.Text;
-            item.Type = txtItemType.Text;
-            item.WishListStatus = chkItemWishlist.Checked;
-            item.Quantity = int.Parse(txtItemQuantity.Text);
-            item.Value = decimal.Parse(txtItemValue.Text);
+                item.Name = txtItemName.Text;
+                item.Type = txtItemType.Text;
+                item.WishListStatus = chkItemWishlist.Checked;
+                item.Quantity = int.Parse(txtItemQuantity.Text);
+                try
+                {
+                    item.Value = decimal.Parse(txtItemValue.Text);
+                }
+                catch
+                {
+                    throw;
+                }
+                
+                IG.ItemList.List.Add(item);
+                user.ItemGroups.List.Add(IG);
+                user.Save();
+                F.Show();
+                F.Activate();
+                this.Close();
 
-            IG.ItemList.List.Add(item);
-            user.ItemGroups.List.Add(IG);
-            user.Save();
-            F.Show();
-            F.Activate();
-            this.Close();
+                //if (IG.Name == selectedNode.Text && selectedNode.Parent.Text == "Collections")
+                //{
+                //    icList.List.Clear();
+                //    foreach (Item it in IG.ItemList.List)
+                //    {
+                //        if (it.WishListStatus == false)
+                //        {
+                //            icList.List.Add(it);
+                //        }
+                //        else
+                //        {
+                //            //Do Nothing
+                //        }
+                //    }
+                //    dgvItemList.DataSource = icList.List;
+                //}
+                //else if (IG.Name == selectedNode.Text && selectedNode.Parent.Text == "Wishlist")
+                //{
+                //    iwList.List.Clear();
+                //    foreach (Item it in IG.ItemList.List)
+                //    {
+                //        if (it.WishListStatus == true)
+                //        {
+                //            iwList.List.Add(it);
+                //        }
+                //        else
+                //        {
+                //            //Do Nothing
+                //        }
+                //    }
+                //    dgvItemList.DataSource = iwList.List;
+                //}
+                #region Empty Text Boxes
+                //txtItemName.Text = string.Empty;
+                //txtItemType.Text = string.Empty;
+                //txtItemQuantity.Text = string.Empty;
+                //txtItemValue.Text = string.Empty;
+                //chkItemWishlist.Checked = false;
+                #endregion
+            }
+            catch
+            {
+                MessageBox.Show("The 'Value' field only accepts numbers.", "Error!", MessageBoxButtons.OK);
+            }
 
-            //if (IG.Name == selectedNode.Text && selectedNode.Parent.Text == "Collections")
-            //{
-            //    icList.List.Clear();
-            //    foreach (Item it in IG.ItemList.List)
-            //    {
-            //        if (it.WishListStatus == false)
-            //        {
-            //            icList.List.Add(it);
-            //        }
-            //        else
-            //        {
-            //            //Do Nothing
-            //        }
-            //    }
-            //    dgvItemList.DataSource = icList.List;
-            //}
-            //else if (IG.Name == selectedNode.Text && selectedNode.Parent.Text == "Wishlist")
-            //{
-            //    iwList.List.Clear();
-            //    foreach (Item it in IG.ItemList.List)
-            //    {
-            //        if (it.WishListStatus == true)
-            //        {
-            //            iwList.List.Add(it);
-            //        }
-            //        else
-            //        {
-            //            //Do Nothing
-            //        }
-            //    }
-            //    dgvItemList.DataSource = iwList.List;
-            //}
-            #region Empty Text Boxes
-            txtItemName.Text = string.Empty;
-            txtItemType.Text = string.Empty;
-            txtItemQuantity.Text = string.Empty;
-            txtItemValue.Text = string.Empty;
-            chkItemWishlist.Checked = false;
-            #endregion
         }
         public frmAddItem(Form1 frm, ItemGroup IG)
         {
@@ -106,6 +121,11 @@ namespace ItemManager
             F.Show();
             F.Activate();
             this.Close();
+        }
+
+        private void frmAddItem_Load(object sender, EventArgs e)
+        {
+            this.Text = "Add an Item to " + Form1.temp.Name;
         }
     }
 }
